@@ -146,6 +146,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -159,6 +160,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gemini_Generated_Image_6vhuee6vhuee6vhu-removebg-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gambar-removebg-preview%281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gambar-removebg-preview%282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gambar-removebg-preview%283%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gambar-removebg-preview%284%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -23,10 +23,13 @@ namespace SistemWarga
         {
             InitializeComponent();
             conn = new SqlConnection(connectionString);
+            
         }
     
     private void btnTampil_Click(object sender, EventArgs e)
         {
+            
+            
             string query = "";
 
             if (cmbLaporan.Text == "Total Warga & KK")

@@ -44,14 +44,14 @@ namespace SistemWarga
                 }
 
 
-                dgvKartuKeluargaPetugas.Rows.Clear();
-                dgvKartuKeluargaPetugas.Columns.Clear();
+                dgvKeluargaAdmin.Rows.Clear();
+                dgvKeluargaAdmin.Columns.Clear();
 
-                dgvKartuKeluargaPetugas.Columns.Add("KepalaKeluarga", "Kepala Keluarga");
-                dgvKartuKeluargaPetugas.Columns.Add("NoKK", "NoKK");
-                dgvKartuKeluargaPetugas.Columns.Add("IdKK", "IdKK");
-                dgvKartuKeluargaPetugas.Columns.Add("Alamat", "Alamat");
-                dgvKartuKeluargaPetugas.Columns.Add("RT", "RT");
+                dgvKeluargaAdmin.Columns.Add("KepalaKeluarga", "Kepala Keluarga");
+                dgvKeluargaAdmin.Columns.Add("NoKK", "NoKK");
+                dgvKeluargaAdmin.Columns.Add("IdKK", "IdKK");
+                dgvKeluargaAdmin.Columns.Add("Alamat", "Alamat");
+                dgvKeluargaAdmin.Columns.Add("RT", "RT");
                 string query = "SELECT * FROM KartuKeluarga";
 
 
@@ -59,7 +59,7 @@ namespace SistemWarga
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    dgvKartuKeluargaPetugas.Rows.Add(
+                    dgvKeluargaAdmin.Rows.Add(
                     reader["KepalaKeluarga"].ToString(),
                     reader["NoKK"].ToString(),
                     reader["IdKK"].ToString(),
@@ -245,11 +245,11 @@ namespace SistemWarga
             }
         }
 
-        private void dgvKartuKeluargaPetugas_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvKartuKeluargaAdmin_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                DataGridViewRow row = dgvKartuKeluargaPetugas.Rows[e.RowIndex];
+                DataGridViewRow row = dgvKeluargaAdmin.Rows[e.RowIndex];
 
                 txtKepalaKeluarga.Text = row.Cells["KepalaKeluarga"].Value.ToString();
                 txtNoKK.Text = row.Cells["NoKK"].Value.ToString();
@@ -268,17 +268,17 @@ namespace SistemWarga
             txtIdKK.Clear();
             txtIdKK.Focus();
         }
-        private void FormWargaPetugas_Load(object sender, EventArgs e)
+        private void FormKeluargaAdmin_Load(object sender, EventArgs e)
         {
 
 
-            dgvKartuKeluargaPetugas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvKartuKeluargaPetugas.MultiSelect = false;
-            dgvKartuKeluargaPetugas.ReadOnly = true;
-            dgvKartuKeluargaPetugas.AllowUserToAddRows = false;
-            dgvKartuKeluargaPetugas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvKeluargaAdmin.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvKeluargaAdmin.MultiSelect = false;
+            dgvKeluargaAdmin.ReadOnly = true;
+            dgvKeluargaAdmin.AllowUserToAddRows = false;
+            dgvKeluargaAdmin.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            dgvKartuKeluargaPetugas.CellClick += dgvKartuKeluargaPetugas_CellClick;
+            dgvKeluargaAdmin.CellClick += dgvKartuKeluargaAdmin_CellClick;
         }
 
     }

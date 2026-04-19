@@ -53,8 +53,8 @@ namespace SistemWarga
                 dgvWarga.Columns.Add("Nama", "Nama");
                 dgvWarga.Columns.Add("JenisKelamin", "Jenis Kelamin");
                 dgvWarga.Columns.Add("TanggalLahir", "Tanggal Lahir");
-                dgvWarga.Columns.Add("Alamat", "Alamat");
-                dgvWarga.Columns.Add("KodeProdi", "ID KK");
+                dgvWarga.Columns.Add("TempatLahir", "Tempat Lahir");
+                dgvWarga.Columns.Add("IdKK", "ID KK");
 
                 string query = "SELECT * FROM Warga";
 
@@ -68,8 +68,8 @@ namespace SistemWarga
                     reader["Nama"].ToString(),
                     reader["JenisKelamin"].ToString(),
                     Convert.ToDateTime(reader["TanggalLahir"]).ToShortDateString(),
-                    reader["Alamat"].ToString(),
-                    reader["KodeProdi"].ToString()
+                    reader["TempatLahir"].ToString(),
+                    reader["IdKK"].ToString()
 
                     );
                 }
@@ -135,7 +135,7 @@ namespace SistemWarga
                 cmd.Parameters.AddWithValue("@NIK", txtNIK.Text);
                 cmd.Parameters.AddWithValue("@TempatLahir", txtTempatLahir.Text);
                 cmd.Parameters.AddWithValue("@StatusKeluarga", cmbSK.Text);
-                cmd.Parameters.AddWithValue("@StatusKeluarga", DateTime.Now);
+                
 
                 int result = cmd.ExecuteNonQuery();
 

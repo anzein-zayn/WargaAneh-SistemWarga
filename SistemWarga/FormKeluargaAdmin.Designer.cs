@@ -43,10 +43,10 @@
             this.txtIdKK = new System.Windows.Forms.TextBox();
             this.txtRT = new System.Windows.Forms.TextBox();
             this.txtAlamat = new System.Windows.Forms.TextBox();
-            this.dgvKartuKeluargaPetugas = new System.Windows.Forms.DataGridView();
+            this.dgvKeluargaAdmin = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvKartuKeluargaPetugas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvKeluargaAdmin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -193,18 +193,18 @@
             this.txtAlamat.Size = new System.Drawing.Size(235, 77);
             this.txtAlamat.TabIndex = 13;
             // 
-            // dgvKartuKeluargaPetugas
+            // dgvKeluargaAdmin
             // 
-            this.dgvKartuKeluargaPetugas.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.dgvKartuKeluargaPetugas.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvKartuKeluargaPetugas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvKartuKeluargaPetugas.Location = new System.Drawing.Point(85, 366);
-            this.dgvKartuKeluargaPetugas.Name = "dgvKartuKeluargaPetugas";
-            this.dgvKartuKeluargaPetugas.RowHeadersWidth = 51;
-            this.dgvKartuKeluargaPetugas.RowTemplate.Height = 24;
-            this.dgvKartuKeluargaPetugas.Size = new System.Drawing.Size(641, 186);
-            this.dgvKartuKeluargaPetugas.TabIndex = 14;
-            this.dgvKartuKeluargaPetugas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKartuKeluargaPetugas_CellClick);
+            this.dgvKeluargaAdmin.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.dgvKeluargaAdmin.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvKeluargaAdmin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvKeluargaAdmin.Location = new System.Drawing.Point(85, 366);
+            this.dgvKeluargaAdmin.Name = "dgvKeluargaAdmin";
+            this.dgvKeluargaAdmin.RowHeadersWidth = 51;
+            this.dgvKeluargaAdmin.RowTemplate.Height = 24;
+            this.dgvKeluargaAdmin.Size = new System.Drawing.Size(641, 186);
+            this.dgvKeluargaAdmin.TabIndex = 14;
+            this.dgvKeluargaAdmin.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKartuKeluargaAdmin_CellClick);
             // 
             // label6
             // 
@@ -235,7 +235,7 @@
             this.ClientSize = new System.Drawing.Size(800, 564);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.dgvKartuKeluargaPetugas);
+            this.Controls.Add(this.dgvKeluargaAdmin);
             this.Controls.Add(this.txtAlamat);
             this.Controls.Add(this.txtRT);
             this.Controls.Add(this.txtIdKK);
@@ -252,8 +252,8 @@
             this.Controls.Add(this.btnConnect);
             this.Name = "FormKeluargaAdmin";
             this.Text = "FormKeluargaAdmin";
-            this.Load += new System.EventHandler(this.FormWargaPetugas_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvKartuKeluargaPetugas)).EndInit();
+          
+            ((System.ComponentModel.ISupportInitialize)(this.dgvKeluargaAdmin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -276,7 +276,7 @@
         private System.Windows.Forms.TextBox txtIdKK;
         private System.Windows.Forms.TextBox txtRT;
         private System.Windows.Forms.TextBox txtAlamat;
-        private System.Windows.Forms.DataGridView dgvKartuKeluargaPetugas;
+        private System.Windows.Forms.DataGridView dgvKeluargaAdmin;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox1;
     }

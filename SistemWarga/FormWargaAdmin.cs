@@ -69,7 +69,8 @@ namespace SistemWarga
                     reader["JenisKelamin"].ToString(),
                     Convert.ToDateTime(reader["TanggalLahir"]).ToShortDateString(),
                     reader["TempatLahir"].ToString(),
-                    reader["IdKK"].ToString()
+                    reader["IdKK"].ToString(),
+                    reader["StatusKeluarga"].ToString()
 
                     );
                 }

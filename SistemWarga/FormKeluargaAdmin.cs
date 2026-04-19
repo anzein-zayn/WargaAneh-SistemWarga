@@ -135,7 +135,7 @@ namespace SistemWarga
                 cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text);
                 cmd.Parameters.AddWithValue("@RT", txtRT.Text);
                 cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text);
-                cmd.Parameters.AddWithValue("@idKK", txtIdKK.Text);
+                cmd.Parameters.AddWithValue("@IdKK", txtIdKK.Text);
 
 
                 int result = cmd.ExecuteNonQuery();

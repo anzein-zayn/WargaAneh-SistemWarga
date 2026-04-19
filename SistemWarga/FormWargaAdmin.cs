@@ -288,6 +288,8 @@ namespace SistemWarga
 
             dgvWarga.CellClick += dgvWarga_CellClick;
         }
+
+       
     }
 }
 

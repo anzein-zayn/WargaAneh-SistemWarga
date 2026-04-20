@@ -55,6 +55,7 @@ namespace SistemWarga
                 dgvWarga.Columns.Add("TanggalLahir", "Tanggal Lahir");
                 dgvWarga.Columns.Add("TempatLahir", "Tempat Lahir");
                 dgvWarga.Columns.Add("IdKK", "ID KK");
+                dgvWarga.Columns.Add("StatusKeluarga", "Status Keluarga");
 
                 string query = "SELECT * FROM Warga";
 
@@ -169,10 +170,9 @@ namespace SistemWarga
                                 SET Nama = @Nama,
                                 JenisKelamin = @JK,
                                 TanggalLahir = @TanggalLahir,
-                                NIK = @NIK,
                                 TempatLahir = @TempatLahir,
                                 StatusKeluarga = @StatusKeluarga
-                                WHERE IdKK = @IdKK";
+                                WHERE NIK = @NIK";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -280,6 +280,10 @@ namespace SistemWarga
             cmbJK.Items.Clear();
             cmbJK.Items.Add("L");
             cmbJK.Items.Add("P");
+            cmbSK.Items.Clear();
+            cmbSK.Items.Add("Kepala Keluarga");
+            cmbSK.Items.Add("Istri");
+            cmbSK.Items.Add("Anak");
 
             dgvWarga.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvWarga.MultiSelect = false;

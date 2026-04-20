@@ -50,9 +50,9 @@ namespace SistemWarga
                 dgvSurat.Columns.Clear();
 
                 dgvSurat.Columns.Add("IdSurat", "IdSurat");
-                dgvSurat.Columns.Add("StatusSurat", "Status Surat");
-                dgvSurat.Columns.Add("JenisSurat", "Jenis Surat");
-                dgvSurat.Columns.Add("TanggalPengajuan", "Tanggal Pengajuan");
+                dgvSurat.Columns.Add("StatusSurat", "StatusSurat");
+                dgvSurat.Columns.Add("JenisSurat", "JenisSurat");
+                dgvSurat.Columns.Add("TanggalPengajuan", "TanggalPengajuan");
                 dgvSurat.Columns.Add("NIK", "NIK");
                 string query = "SELECT * FROM SuratPengantar";
 
@@ -112,7 +112,7 @@ namespace SistemWarga
                 string query = @"INSERT INTO SuratPengantar
                                 (IdSurat, JenisSurat, TanggalPengajuan, StatusSurat, NIK)
                                 VALUES
-                                (@IdSurat, @JenisSurat, @TanggalPengajuan, @Status Surat, @NIK)";
+                                (@IdSurat, @JenisSurat, @TanggalPengajuan, @StatusSurat, @NIK)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -153,7 +153,7 @@ namespace SistemWarga
                 string query = @"UPDATE SuratPengantar
                                 SET JenisSurat = @JenisSurat,
                                 TanggalPengajuan = @TanggalPengajuan,
-                                StatusSurat = @Status Surat,
+                                StatusSurat = @StatusSurat,
                                 NIK = @NIK
                                 WHERE IdSurat = @IdSurat";
 

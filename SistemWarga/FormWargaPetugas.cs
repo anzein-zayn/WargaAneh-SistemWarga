@@ -55,10 +55,10 @@ namespace SistemWarga
                 dgvWarga.Columns.Add("IdKK", "IdKK");
                 dgvWarga.Columns.Add("NIK", "NIK");
                 dgvWarga.Columns.Add("Nama", "Nama");
-                dgvWarga.Columns.Add("JenisKelamin", "Jenis Kelamin");
-                dgvWarga.Columns.Add("TanggalLahir", "Tanggal Lahir");
-                dgvWarga.Columns.Add("TempatLahir", "Tempat Lahir");
-                dgvWarga.Columns.Add("StatusKeluarga", "Status Keluarga");
+                dgvWarga.Columns.Add("JenisKelamin", "JenisKelamin");
+                dgvWarga.Columns.Add("TanggalLahir", "TanggalLahir");
+                dgvWarga.Columns.Add("TempatLahir", "TempatLahir");
+                dgvWarga.Columns.Add("StatusKeluarga", "StatusKeluarga");
                 string query = "SELECT * FROM Warga";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -139,7 +139,7 @@ namespace SistemWarga
                 cmd.Parameters.AddWithValue("@NIK", txtNIK.Text);
                 cmd.Parameters.AddWithValue("@TempatLahir", txtTempatLahir.Text);
                 cmd.Parameters.AddWithValue("@StatusKeluarga", cmbSK.Text);
-                cmd.Parameters.AddWithValue("@StatusKeluarga", DateTime.Now);
+                
 
                 int result = cmd.ExecuteNonQuery();
 
@@ -172,10 +172,9 @@ namespace SistemWarga
                                 SET Nama = @Nama,
                                 JenisKelamin = @JK,
                                 TanggalLahir = @TanggalLahir,
-                                NIK = @NIK,
                                 TempatLahir = @TempatLahir,
                                 StatusKeluarga = @StatusKeluarga
-                                WHERE IdKK = @IdKK";
+                                WHERE NIK = @NIK";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 

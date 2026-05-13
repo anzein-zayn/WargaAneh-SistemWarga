@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace SistemWarga
 {
@@ -70,6 +71,18 @@ namespace SistemWarga
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
+      
+        private void txtUsername_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Izinkan: huruf (a-z, A-Z), angka (0-9), backspace
+            if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true; // Blokir karakter lainnya
+            }
+        }
+
+        
     }
 }
 

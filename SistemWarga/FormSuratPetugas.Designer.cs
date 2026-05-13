@@ -54,6 +54,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(33, 221);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 18);
@@ -64,6 +65,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(33, 265);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 18);
@@ -74,6 +76,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(33, 315);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(142, 18);
@@ -84,6 +87,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(373, 265);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(74, 15);
@@ -107,6 +111,7 @@
             this.txtIdSurat.Name = "txtIdSurat";
             this.txtIdSurat.Size = new System.Drawing.Size(200, 22);
             this.txtIdSurat.TabIndex = 1;
+            this.txtIdSurat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtIdSurat_KeyPress);
             // 
             // txtNIK
             // 
@@ -117,10 +122,13 @@
             // 
             // dtpTP
             // 
+            this.dtpTP.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.dtpTP.Location = new System.Drawing.Point(36, 334);
+            this.dtpTP.MaxDate = new System.DateTime(2026, 5, 13, 20, 28, 12, 0);
             this.dtpTP.Name = "dtpTP";
             this.dtpTP.Size = new System.Drawing.Size(200, 22);
             this.dtpTP.TabIndex = 2;
+            this.dtpTP.Value = new System.DateTime(2026, 5, 13, 0, 0, 0, 0);
             // 
             // cmbJS
             // 
@@ -149,7 +157,6 @@
             this.btnConnect.TabIndex = 4;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = false;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // btnLoad
             // 
@@ -196,6 +203,7 @@
             this.dgvSurat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSurat.Location = new System.Drawing.Point(36, 427);
             this.dgvSurat.Name = "dgvSurat";
+            this.dgvSurat.ReadOnly = true;
             this.dgvSurat.RowHeadersWidth = 51;
             this.dgvSurat.RowTemplate.Height = 24;
             this.dgvSurat.Size = new System.Drawing.Size(552, 188);
@@ -246,7 +254,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.ForeColor = System.Drawing.Color.White;
+            this.ForeColor = System.Drawing.Color.Black;
             this.Name = "FormSuratPetugas";
             this.Text = "FormSurat";
             this.Load += new System.EventHandler(this.FormWargaPetugas_Load);

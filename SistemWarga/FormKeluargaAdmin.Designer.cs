@@ -35,12 +35,10 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtKepalaKeluarga = new System.Windows.Forms.TextBox();
             this.txtNoKK = new System.Windows.Forms.TextBox();
-            this.txtIdKK = new System.Windows.Forms.TextBox();
             this.txtRT = new System.Windows.Forms.TextBox();
             this.txtAlamat = new System.Windows.Forms.TextBox();
             this.dgvKeluargaAdmin = new System.Windows.Forms.DataGridView();
@@ -56,20 +54,19 @@
             this.btnConnect.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnConnect.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConnect.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnConnect.Location = new System.Drawing.Point(491, 273);
+            this.btnConnect.Location = new System.Drawing.Point(366, 239);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(94, 42);
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = false;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // btnLoad
             // 
             this.btnLoad.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnLoad.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoad.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnLoad.Location = new System.Drawing.Point(610, 273);
+            this.btnLoad.Location = new System.Drawing.Point(466, 240);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(90, 42);
             this.btnLoad.TabIndex = 1;
@@ -82,7 +79,7 @@
             this.btnInsert.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnInsert.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInsert.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnInsert.Location = new System.Drawing.Point(491, 321);
+            this.btnInsert.Location = new System.Drawing.Point(366, 321);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(94, 39);
             this.btnInsert.TabIndex = 2;
@@ -95,7 +92,7 @@
             this.btnUpdate.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnUpdate.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpdate.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnUpdate.Location = new System.Drawing.Point(610, 321);
+            this.btnUpdate.Location = new System.Drawing.Point(466, 321);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(90, 39);
             this.btnUpdate.TabIndex = 3;
@@ -119,22 +116,11 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label2.Location = new System.Drawing.Point(462, 171);
+            this.label2.Location = new System.Drawing.Point(110, 176);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 18);
             this.label2.TabIndex = 5;
             this.label2.Text = "No KK";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label3.Location = new System.Drawing.Point(110, 171);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 18);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Id KK";
             // 
             // label4
             // 
@@ -152,7 +138,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Leelawadee", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label5.Location = new System.Drawing.Point(462, 218);
+            this.label5.Location = new System.Drawing.Point(363, 174);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(27, 18);
             this.label5.TabIndex = 8;
@@ -167,24 +153,19 @@
             // 
             // txtNoKK
             // 
-            this.txtNoKK.Location = new System.Drawing.Point(465, 190);
+            this.txtNoKK.Location = new System.Drawing.Point(113, 195);
             this.txtNoKK.Name = "txtNoKK";
             this.txtNoKK.Size = new System.Drawing.Size(235, 22);
             this.txtNoKK.TabIndex = 10;
-            // 
-            // txtIdKK
-            // 
-            this.txtIdKK.Location = new System.Drawing.Point(113, 190);
-            this.txtIdKK.Name = "txtIdKK";
-            this.txtIdKK.Size = new System.Drawing.Size(235, 22);
-            this.txtIdKK.TabIndex = 11;
+            this.txtNoKK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNoKK_KeyPress);
             // 
             // txtRT
             // 
-            this.txtRT.Location = new System.Drawing.Point(465, 239);
+            this.txtRT.Location = new System.Drawing.Point(366, 195);
             this.txtRT.Name = "txtRT";
             this.txtRT.Size = new System.Drawing.Size(235, 22);
             this.txtRT.TabIndex = 12;
+            this.txtRT.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRT_KeyPress);
             // 
             // txtAlamat
             // 
@@ -204,6 +185,7 @@
             this.dgvKeluargaAdmin.RowHeadersWidth = 51;
             this.dgvKeluargaAdmin.RowTemplate.Height = 24;
             this.dgvKeluargaAdmin.Size = new System.Drawing.Size(641, 186);
+            this.dgvKeluargaAdmin.StandardTab = true;
             this.dgvKeluargaAdmin.TabIndex = 14;
             this.dgvKeluargaAdmin.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKartuKeluargaAdmin_CellClick);
             // 
@@ -233,7 +215,7 @@
             this.btnDelete.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnDelete.Location = new System.Drawing.Point(713, 321);
+            this.btnDelete.Location = new System.Drawing.Point(571, 321);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 39);
             this.btnDelete.TabIndex = 17;
@@ -253,12 +235,10 @@
             this.Controls.Add(this.dgvKeluargaAdmin);
             this.Controls.Add(this.txtAlamat);
             this.Controls.Add(this.txtRT);
-            this.Controls.Add(this.txtIdKK);
             this.Controls.Add(this.txtNoKK);
             this.Controls.Add(this.txtKepalaKeluarga);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnUpdate);
@@ -282,12 +262,10 @@
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtKepalaKeluarga;
         private System.Windows.Forms.TextBox txtNoKK;
-        private System.Windows.Forms.TextBox txtIdKK;
         private System.Windows.Forms.TextBox txtRT;
         private System.Windows.Forms.TextBox txtAlamat;
         private System.Windows.Forms.DataGridView dgvKeluargaAdmin;

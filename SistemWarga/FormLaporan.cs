@@ -25,8 +25,24 @@ namespace SistemWarga
             conn = new SqlConnection(connectionString);
             
         }
-    
-    private void btnTampil_Click(object sender, EventArgs e)
+        private void AutoConnect()
+        {
+            try
+            {
+                if (conn.State == System.Data.ConnectionState.Closed)
+                    conn.Open();
+
+                this.Text = " Terhubung ✓";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Koneksi gagal: " + ex.Message,
+                                "Error Koneksi",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+        private void btnTampil_Click(object sender, EventArgs e)
         {
             
             
@@ -93,6 +109,8 @@ namespace SistemWarga
             dgvLaporan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvLaporan.CellClick += dgvLaporan_CellClick;
+
+            AutoConnect();
         }
     }
 }

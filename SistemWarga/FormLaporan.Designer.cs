@@ -50,6 +50,7 @@
             this.dgvLaporan.BackgroundColor = System.Drawing.Color.White;
             this.dgvLaporan.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvLaporan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLaporan.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dgvLaporan.Location = new System.Drawing.Point(47, 232);
             this.dgvLaporan.Name = "dgvLaporan";
             this.dgvLaporan.RowHeadersWidth = 51;
@@ -87,7 +88,7 @@
             this.Controls.Add(this.btnTampil);
             this.Controls.Add(this.cmbLaporan);
             this.Font = new System.Drawing.Font("Geometr212 BkCn BT", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.AliceBlue;
+            this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Name = "FormLaporan";
             this.Text = "Form Laporan";
             this.Load += new System.EventHandler(this.FormLaporan_Load);

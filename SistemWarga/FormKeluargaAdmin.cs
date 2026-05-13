@@ -15,25 +15,24 @@ namespace SistemWarga
             InitializeComponent();
             conn = new SqlConnection(connectionString);
         }
-        private void ConnectDatabase()
+        private void AutoConnect()
         {
             try
             {
                 if (conn.State == System.Data.ConnectionState.Closed)
-                {
                     conn.Open();
-                }
-                MessageBox.Show("Koneksi berhasil!");
+
+                this.Text = " Terhubung ✓";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Koneksi gagal: " + ex.Message);
+                MessageBox.Show("Koneksi gagal: " + ex.Message,
+                                "Error Koneksi",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-            ConnectDatabase();
-        }
+
         private void btnLoad_Click(object sender, EventArgs e)
         {
             try
@@ -49,7 +48,6 @@ namespace SistemWarga
 
                 dgvKeluargaAdmin.Columns.Add("KepalaKeluarga", "Kepala Keluarga");
                 dgvKeluargaAdmin.Columns.Add("NoKK", "NoKK");
-                dgvKeluargaAdmin.Columns.Add("IdKK", "IdKK");
                 dgvKeluargaAdmin.Columns.Add("Alamat", "Alamat");
                 dgvKeluargaAdmin.Columns.Add("RT", "RT");
                 string query = "SELECT * FROM KartuKeluarga";
@@ -62,7 +60,6 @@ namespace SistemWarga
                     dgvKeluargaAdmin.Rows.Add(
                     reader["KepalaKeluarga"].ToString(),
                     reader["NoKK"].ToString(),
-                    reader["IdKK"].ToString(),
                     reader["Alamat"].ToString(),
                     reader["RT"].ToString()
 
@@ -117,17 +114,11 @@ namespace SistemWarga
                     return;
                 }
 
-                if (txtIdKK.Text == "")
-                {
-                    MessageBox.Show("IdKK harus diisi");
-                    txtIdKK.Focus();
-                    return;
-                }
 
                 string query = @"INSERT INTO KartuKeluarga
-                                (KepalaKeluarga, NoKK , RT, Alamat, IdKK)
+                                (KepalaKeluarga, NoKK , RT, Alamat)
                                 VALUES
-                               (@KepalaKeluarga, @NoKK ,@RT, @Alamat, @IdKK)";
+                               (@KepalaKeluarga, @NoKK ,@RT, @Alamat)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -135,7 +126,6 @@ namespace SistemWarga
                 cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text);
                 cmd.Parameters.AddWithValue("@RT", txtRT.Text);
                 cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text);
-                cmd.Parameters.AddWithValue("@IdKK", txtIdKK.Text);
 
 
                 int result = cmd.ExecuteNonQuery();
@@ -158,6 +148,7 @@ namespace SistemWarga
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+
             try
             {
                 if (conn.State == System.Data.ConnectionState.Closed)
@@ -168,8 +159,7 @@ namespace SistemWarga
                                 SET KepalaKeluarga = @KepalaKeluarga,
                                 NoKK = @NoKK,
                                 RT = @RT,
-                                Alamat = @Alamat,
-                                IdKK = @IdKK
+                                Alamat = @Alamat
                                 WHERE NoKK = @NoKK";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -178,7 +168,6 @@ namespace SistemWarga
                 cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text);
                 cmd.Parameters.AddWithValue("@RT", txtRT.Text);
                 cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text);
-                cmd.Parameters.AddWithValue("@IdKK", txtIdKK.Text);
 
                 int result = cmd.ExecuteNonQuery();
 
@@ -219,10 +208,10 @@ namespace SistemWarga
 
                 if (resultConfirm == DialogResult.Yes)
                 {
-                    string query = "DELETE FROM KartuKeluarga WHERE IdKK = @IdKK";
+                    string query = "DELETE FROM KartuKeluarga WHERE NoKK = @NoKK";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IdKK", txtIdKK.Text);
+                    cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text);
 
                     int result = cmd.ExecuteNonQuery();
 
@@ -255,7 +244,6 @@ namespace SistemWarga
                 txtNoKK.Text = row.Cells["NoKK"].Value.ToString();
                 txtRT.Text = row.Cells["RT"].Value.ToString();
                 txtAlamat.Text = row.Cells["Alamat"].Value.ToString();
-                txtIdKK.Text = row.Cells["IdKK"].Value.ToString();
 
             }
         }
@@ -265,8 +253,7 @@ namespace SistemWarga
             txtNoKK.Clear();
             txtRT.Clear();
             txtAlamat.Clear();
-            txtIdKK.Clear();
-            txtIdKK.Focus();
+            txtNoKK.Focus();
         }
         private void FormKeluargaAdmin_Load(object sender, EventArgs e)
         {
@@ -279,8 +266,40 @@ namespace SistemWarga
             dgvKeluargaAdmin.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvKeluargaAdmin.CellClick += dgvKartuKeluargaAdmin_CellClick;
+
+            AutoConnect();
         }
 
+        private void txtNoKK_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Hanya izinkan angka (0-9) dan backspace
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true; // Blokir karakter selain angka
+            }
+        }
+
+        // Untuk txtNIK
+        private void txtKK_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Hanya izinkan angka (0-9) dan backspace
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
+
+
+        private void txtRT_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Hanya izinkan angka (0-9) dan backspace
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+
+        }
     }
 }
 

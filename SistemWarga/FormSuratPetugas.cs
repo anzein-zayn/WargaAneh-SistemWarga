@@ -13,29 +13,29 @@ namespace SistemWarga
         {
             InitializeComponent();
             conn = new SqlConnection(connectionString);
+            dtpTP.MaxDate = DateTime.Today;
+
+            // Opsional: set default value ke hari ini
+            dtpTP.Value = DateTime.Today;
         }
 
-        private void ConnectDatabase()
+        private void AutoConnect()
         {
             try
             {
                 if (conn.State == System.Data.ConnectionState.Closed)
-                {
                     conn.Open();
-                }
-                MessageBox.Show("Koneksi berhasil!");
+
+                this.Text = " Terhubung ✓";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Koneksi gagal: " + ex.Message);
+                MessageBox.Show("Koneksi gagal: " + ex.Message,
+                                "Error Koneksi",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
-
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-            ConnectDatabase();
-        }
-
         private void btnLoad_Click(object sender, EventArgs e)
         {
             try
@@ -228,6 +228,27 @@ namespace SistemWarga
             dgvSurat.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvSurat.CellClick += dgvSurat_CellClick;
+
+            AutoConnect();
         }
+        private void txtIdSurat_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Hanya izinkan angka (0-9) dan backspace
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true; // Blokir karakter selain angka
+            }
+        }
+
+        // Untuk txtNIK
+        private void txtNIK_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Hanya izinkan angka (0-9) dan backspace
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
     }
 }

@@ -13,29 +13,28 @@ namespace SistemWarga
         {
             InitializeComponent();
             conn = new SqlConnection(connectionString);
-        }
+            dtpTP.MaxDate = DateTime.Today;
 
-        private void ConnectDatabase()
+            // Opsional: set default value ke hari ini
+            dtpTP.Value = DateTime.Today;
+        }
+        private void AutoConnect()
         {
             try
             {
                 if (conn.State == System.Data.ConnectionState.Closed)
-                {
                     conn.Open();
-                }
-                MessageBox.Show("Koneksi berhasil!");
+
+                this.Text = " Terhubung ✓";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Koneksi gagal: " + ex.Message);
+                MessageBox.Show("Koneksi gagal: " + ex.Message,
+                                "Error Koneksi",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
-
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-            ConnectDatabase();
-        }
-
         private void btnLoad_Click(object sender, EventArgs e)
         {
             try
@@ -272,6 +271,27 @@ namespace SistemWarga
             dgvSurat.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvSurat.CellClick += dgvSurat_CellClick;
+
+            AutoConnect();
         }
+
+        private void txtIDSurat_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Izinkan: huruf (a-z, A-Z), angka (0-9), backspace
+            if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true; // Blokir karakter lainnya
+            }
+        }
+
+        private void txtNIK_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Izinkan: huruf (a-z, A-Z), angka (0-9), backspace
+            if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true; // Blokir karakter lainnya
+            }
+        }
+
     }
 }

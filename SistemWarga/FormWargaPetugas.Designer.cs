@@ -34,7 +34,7 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.dgvWarga = new System.Windows.Forms.DataGridView();
-            this.txtIdKK = new System.Windows.Forms.TextBox();
+            this.txtNoKK = new System.Windows.Forms.TextBox();
             this.txtNIK = new System.Windows.Forms.TextBox();
             this.txtNama = new System.Windows.Forms.TextBox();
             this.txtTempatLahir = new System.Windows.Forms.TextBox();
@@ -66,7 +66,7 @@
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = false;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+
             // 
             // btnTambah
             // 
@@ -120,12 +120,13 @@
             this.dgvWarga.TabIndex = 1;
             this.dgvWarga.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvWarga_CellClick);
             // 
-            // txtIdKK
+            // txtNoKK
             // 
-            this.txtIdKK.Location = new System.Drawing.Point(110, 247);
-            this.txtIdKK.Name = "txtIdKK";
-            this.txtIdKK.Size = new System.Drawing.Size(180, 22);
-            this.txtIdKK.TabIndex = 2;
+            this.txtNoKK.Location = new System.Drawing.Point(110, 247);
+            this.txtNoKK.Name = "txtNoKK";
+            this.txtNoKK.Size = new System.Drawing.Size(180, 22);
+            this.txtNoKK.TabIndex = 2;
+            this.txtNoKK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNoKK_KeyPress);
             // 
             // txtNIK
             // 
@@ -133,6 +134,7 @@
             this.txtNIK.Name = "txtNIK";
             this.txtNIK.Size = new System.Drawing.Size(180, 22);
             this.txtNIK.TabIndex = 2;
+            this.txtNIK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNIK_KeyPress);
             // 
             // txtNama
             // 
@@ -140,6 +142,7 @@
             this.txtNama.Name = "txtNama";
             this.txtNama.Size = new System.Drawing.Size(180, 22);
             this.txtNama.TabIndex = 2;
+            this.txtNama.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNamaLengkap_KeyPress);
             // 
             // txtTempatLahir
             // 
@@ -147,6 +150,7 @@
             this.txtTempatLahir.Name = "txtTempatLahir";
             this.txtTempatLahir.Size = new System.Drawing.Size(159, 22);
             this.txtTempatLahir.TabIndex = 2;
+            this.txtTempatLahir.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTL_KeyPress);
             // 
             // label1
             // 
@@ -155,9 +159,9 @@
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
             this.label1.Location = new System.Drawing.Point(113, 228);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 18);
+            this.label1.Size = new System.Drawing.Size(53, 18);
             this.label1.TabIndex = 3;
-            this.label1.Text = "IdKK";
+            this.label1.Text = "No KK";
             // 
             // label2
             // 
@@ -299,7 +303,7 @@
             this.Controls.Add(this.txtTempatLahir);
             this.Controls.Add(this.txtNama);
             this.Controls.Add(this.txtNIK);
-            this.Controls.Add(this.txtIdKK);
+            this.Controls.Add(this.txtNoKK);
             this.Controls.Add(this.dgvWarga);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.btnUpdate);
@@ -322,7 +326,7 @@
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.DataGridView dgvWarga;
-        private System.Windows.Forms.TextBox txtIdKK;
+        private System.Windows.Forms.TextBox txtNoKK;
         private System.Windows.Forms.TextBox txtNIK;
         private System.Windows.Forms.TextBox txtNama;
         private System.Windows.Forms.TextBox txtTempatLahir;

@@ -177,4 +177,19 @@ BEGIN
         StatusKeluarga = @StatusKeluarga
     WHERE NIK = @NIK;
 END;
-GO
+
+
+CREATE PROCEDURE SP_DeleteWarga
+    @NIK VARCHAR(16)
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+    IF NOT EXISTS (SELECT 1 FROM Warga WHERE NIK = @NIK)
+    BEGIN
+        RAISERROR('Data Warga dengan NIK tersebut tidak ditemukan.', 16, 1);
+        RETURN;
+    END
+ 
+    DELETE FROM Warga WHERE NIK = @NIK;
+END;

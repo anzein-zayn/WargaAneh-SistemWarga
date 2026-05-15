@@ -22,13 +22,13 @@ CREATE TABLE Warga (
     TempatLahir   VARCHAR(100) NOT NULL,
     TanggalLahir  DATE NOT NULL,
     JenisKelamin  VARCHAR(20)  NOT NULL check (JenisKelamin in ('L','P')),
-    NoKK         varchar(16) NOT NULL FOREIGN KEY REFERENCES KartuKeluarga(NoKK),
+    NoKK         varchar(16) NOT NULL REFERENCES KartuKeluarga(NoKK),
     StatusKeluarga VARCHAR(50) NOT NULL check (StatusKeluarga in ('Kepala Keluarga','Istri', 'Anak'))
 );
 
 CREATE TABLE SuratPengantar (
     IdSurat          INT PRIMARY KEY,
-    NIK          varchar (16) FOREIGN KEY REFERENCES Warga(NIK) ON DELETE CASCADE,
+    NIK          varchar (16)  REFERENCES Warga(NIK) ON DELETE CASCADE,
     JenisSurat       VARCHAR(100) NOT NULL,
     TanggalPengajuan DATE NOT NULL DEFAULT GETDATE(),
     StatusSurat      VARCHAR(50)  NOT NULL check (StatusSurat in ('Pending','Selesai'))
@@ -57,4 +57,26 @@ VALUES
     (2,'3371010101010003', 'Surat Keterangan Tidak Mampu', '2025-02-15', 'Pending'),
     (3,'3371010101010004', 'Surat Pengantar SKCK', '2025-03-01', 'Selesai');
 
-	
+CREATE VIEW vw_Warga AS
+    SELECT
+        w.NIK,
+        w.Nama,
+        w.JenisKelamin,
+        w.TanggalLahir,
+        w.TempatLahir,
+        kk.NoKK,
+        w.StatusKeluarga
+    FROM Warga w
+    INNER JOIN KartuKeluarga kk ON w.NoKK = kk.NoKK;
+
+
+CREATE VIEW vw_KartuKeluarga AS
+    SELECT
+        kk.NoKK,
+        kk.KepalaKeluarga,
+        kk.Alamat,
+        kk.RT,
+        COUNT(w.NIK) AS JumlahAnggota
+    FROM KartuKeluarga kk
+    LEFT JOIN Warga w ON kk.NoKK = w.NoKK
+    GROUP BY kk.NoKK, kk.NoKK, kk.KepalaKeluarga, kk.Alamat, kk.RT;

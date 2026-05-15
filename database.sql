@@ -218,3 +218,28 @@ BEGIN
        OR NoKK LIKE '%' + @Keyword + '%';
 END;
 GO
+
+ 
+CREATE PROCEDURE SP_InsertKartuKeluarga
+    @NoKK           VARCHAR(16),
+    @KepalaKeluarga VARCHAR(100),
+    @Alamat         VARCHAR(255),
+    @RT             VARCHAR(5)
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+    IF EXISTS (SELECT 1 FROM KartuKeluarga WHERE NoKK = @NoKK)
+    BEGIN
+        RAISERROR('NoKK sudah terdaftar.', 16, 1);
+        RETURN;
+    END
+ 
+    -- NoKK di-generate otomatis (ambil MAX + 1)
+    DECLARE @NewId INT;
+    SELECT @NewId = ISNULL(MAX(NoKK), 0) + 1 FROM KartuKeluarga;
+ 
+    INSERT INTO KartuKeluarga ( NoKK, KepalaKeluarga, Alamat, RT)
+    VALUES (@NewId, @NoKK, @KepalaKeluarga, @Alamat, @RT);
+END;
+GO

@@ -243,3 +243,28 @@ BEGIN
     VALUES (@NewId, @NoKK, @KepalaKeluarga, @Alamat, @RT);
 END;
 GO
+
+ 
+CREATE PROCEDURE SP_UpdateKartuKeluarga
+    @NoKK           VARCHAR(16),
+    @KepalaKeluarga VARCHAR(100),
+    @Alamat         VARCHAR(255),
+    @RT             VARCHAR(5)
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+    IF NOT EXISTS (SELECT 1 FROM KartuKeluarga WHERE NoKK = @NoKK)
+    BEGIN
+        RAISERROR('Data KartuKeluarga tidak ditemukan.', 16, 1);
+        RETURN;
+    END
+ 
+    UPDATE KartuKeluarga
+    SET NoKK           = @NoKK,
+        KepalaKeluarga = @KepalaKeluarga,
+        Alamat         = @Alamat,
+        RT             = @RT
+    WHERE NoKK = @NoKK;
+END;
+GO

@@ -92,3 +92,15 @@ SELECT
 FROM SuratPengantar sp
 INNER JOIN Warga w ON sp.NIK = w.NIK;
 
+
+---WARGA---
+
+CREATE PROCEDURE SP_GetAllWarga
+AS
+BEGIN
+    SET NOCOUNT ON;
+    -- Menggunakan VIEW vw_Warga agar data sudah ter-JOIN dengan KartuKeluarga
+    SELECT NIK, Nama, JenisKelamin, TanggalLahir, TempatLahir, NoKK, NoKK, StatusKeluarga
+    FROM vw_Warga
+    ORDER BY Nama;
+END;

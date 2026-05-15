@@ -117,3 +117,34 @@ BEGIN
        OR NIK  LIKE '%' + @Keyword + '%'
     ORDER BY Nama;
 END;
+
+
+CREATE PROCEDURE SP_InsertWarga
+    @NIK            VARCHAR(16),
+    @Nama           VARCHAR(100),
+    @TempatLahir    VARCHAR(100),
+    @TanggalLahir   DATE,
+    @JenisKelamin   VARCHAR(20),
+    @NoKK           INT,
+    @StatusKeluarga VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+    -- Validasi: apakah NoKK ada di tabel KartuKeluarga
+    IF NOT EXISTS (SELECT 1 FROM KartuKeluarga WHERE NoKK = @NoKK)
+    BEGIN
+        RAISERROR('NoKK tidak ditemukan di tabel KartuKeluarga.', 16, 1);
+        RETURN;
+    END
+ 
+    -- Validasi: apakah NIK sudah ada
+    IF EXISTS (SELECT 1 FROM Warga WHERE NIK = @NIK)
+    BEGIN
+        RAISERROR('NIK sudah terdaftar.', 16, 1);
+        RETURN;
+    END
+ 
+    INSERT INTO Warga (NIK, Nama, TempatLahir, TanggalLahir, JenisKelamin, NoKK, StatusKeluarga)
+    VALUES (@NIK, @Nama, @TempatLahir, @TanggalLahir, @JenisKelamin, @NoKK, @StatusKeluarga);
+END;

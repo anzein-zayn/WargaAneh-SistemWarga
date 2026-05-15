@@ -312,3 +312,27 @@ BEGIN
        OR Nama       LIKE '%' + @Keyword + '%';
 END;
 GO
+
+ 
+CREATE PROCEDURE SP_InsertSuratPengantar
+    @NIK              VARCHAR(16),
+    @JenisSurat       VARCHAR(100),
+    @TanggalPengajuan DATE,
+    @StatusSurat      VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+    IF NOT EXISTS (SELECT 1 FROM Warga WHERE NIK = @NIK)
+    BEGIN
+        RAISERROR('NIK tidak ditemukan di tabel Warga.', 16, 1);
+        RETURN;
+    END
+ 
+    DECLARE @NewId INT;
+    SELECT @NewId = ISNULL(MAX(IdSurat), 0) + 1 FROM SuratPengantar;
+ 
+    INSERT INTO SuratPengantar (IdSurat, NIK, JenisSurat, TanggalPengajuan, StatusSurat)
+    VALUES (@NewId, @NIK, @JenisSurat, @TanggalPengajuan, @StatusSurat);
+END;
+GO

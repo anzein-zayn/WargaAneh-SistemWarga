@@ -193,3 +193,16 @@ BEGIN
  
     DELETE FROM Warga WHERE NIK = @NIK;
 END;
+
+---KARTU KELUARGA---
+
+CREATE PROCEDURE SP_GetAllKartuKeluarga
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT  NoKK, KepalaKeluarga, Alamat, RT, JumlahAnggota
+    FROM vw_KartuKeluarga
+    ORDER BY NoKK;
+END;
+GO
+ 

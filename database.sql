@@ -10,8 +10,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE KartuKeluarga (
-    IdKK           INT PRIMARY KEY ,
-    NoKK           VARCHAR(16)  NOT NULL UNIQUE,
+    NoKK           varchar (16)PRIMARY KEY  NOT NULL ,
     KepalaKeluarga VARCHAR(100) NOT NULL,
     Alamat         VARCHAR(255) NOT NULL,
     RT             VARCHAR(5)   NOT NULL
@@ -23,7 +22,7 @@ CREATE TABLE Warga (
     TempatLahir   VARCHAR(100) NOT NULL,
     TanggalLahir  DATE NOT NULL,
     JenisKelamin  VARCHAR(20)  NOT NULL check (JenisKelamin in ('L','P')),
-    IdKK          INT NOT NULL FOREIGN KEY REFERENCES KartuKeluarga(IdKK),
+    NoKK         varchar(16) NOT NULL FOREIGN KEY REFERENCES KartuKeluarga(NoKK),
     StatusKeluarga VARCHAR(50) NOT NULL check (StatusKeluarga in ('Kepala Keluarga','Istri', 'Anak'))
 );
 
@@ -40,17 +39,17 @@ VALUES
     (1, 'admin',    'admin123',    'Admin'),
     (2,'petugas1', 'petugas123',  'Petugas');
 
-INSERT INTO KartuKeluarga (IdKK, NoKK, KepalaKeluarga, Alamat, RT)
+INSERT INTO KartuKeluarga (NoKK, KepalaKeluarga, Alamat, RT)
 VALUES
-    (1, '3371010101010001', 'Budi Santoso',   'Jl. Mawar No. 1', '001'),
-    (2, '3371010101010002', 'Siti Rahayu',    'Jl. Melati No. 5', '002');
+    ('3371010101010001', 'Budi Santoso',   'Jl. Mawar No. 1', '001'),
+    ('3371010101010002', 'Siti Rahayu',    'Jl. Melati No. 5', '002');
 
-INSERT INTO Warga ( NIK, Nama, TempatLahir, TanggalLahir, JenisKelamin, IdKK, StatusKeluarga)
+INSERT INTO Warga ( NIK, Nama, TempatLahir, TanggalLahir, JenisKelamin, NoKK, StatusKeluarga)
 VALUES
-    ('3371010101010001', 'Budi Santoso',   'Yogyakarta', '1980-01-15', 'L',   1, 'Kepala Keluarga'),
-    ('3371010101010002', 'Dewi Santoso',   'Yogyakarta', '1985-06-20', 'P',   1, 'Istri'),
-    ('3371010101010003', 'Andi Santoso',   'Yogyakarta', '2005-03-10', 'L',   1, 'Anak'),
-    ('3371010101010004', 'Siti Rahayu',    'Solo',       '1975-09-05', 'P',   2, 'Kepala Keluarga');
+    ('3371010101010001', 'Budi Santoso',   'Yogyakarta', '1980-01-15', 'L',  '3371010101010001', 'Kepala Keluarga'),
+    ('3371010101010002', 'Dewi Santoso',   'Yogyakarta', '1985-06-20', 'P',  '3371010101010001', 'Istri'),
+    ('3371010101010003', 'Andi Santoso',   'Yogyakarta', '2005-03-10', 'L',   '3371010101010001', 'Anak'),
+    ('3371010101010004', 'Siti Rahayu',    'Solo',       '1975-09-05', 'P',   '3371010101010002', 'Kepala Keluarga');
 
 INSERT INTO SuratPengantar (IdSurat, NIK, JenisSurat, TanggalPengajuan, StatusSurat)
 VALUES

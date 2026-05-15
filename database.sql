@@ -1,4 +1,4 @@
-
+﻿
 CREATE DATABASE SistemWarga;
 GO
 
@@ -287,7 +287,7 @@ END;
 GO
 
 -- SP SURAT PENGANTAR
--- ?????????????????????????????????????????
+-- ─────────────────────────────────────────
  
 CREATE PROCEDURE SP_GetAllSuratPengantar
 AS
@@ -296,5 +296,19 @@ BEGIN
     SELECT IdSurat, NIK, Nama, JenisSurat, TanggalPengajuan, StatusSurat
     FROM vw_SuratPengantar
     ORDER BY TanggalPengajuan DESC;
+END;
+GO
+
+ 
+CREATE PROCEDURE SP_SearchSuratPengantar
+    @Keyword NVARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT IdSurat, NIK, Nama, JenisSurat, TanggalPengajuan, StatusSurat
+    FROM vw_SuratPengantar
+    WHERE NIK       LIKE '%' + @Keyword + '%'
+       OR JenisSurat LIKE '%' + @Keyword + '%'
+       OR Nama       LIKE '%' + @Keyword + '%';
 END;
 GO

@@ -336,3 +336,29 @@ BEGIN
     VALUES (@NewId, @NIK, @JenisSurat, @TanggalPengajuan, @StatusSurat);
 END;
 GO
+
+ 
+CREATE PROCEDURE SP_UpdateSuratPengantar
+    @IdSurat          INT,
+    @NIK              VARCHAR(16),
+    @JenisSurat       VARCHAR(100),
+    @TanggalPengajuan DATE,
+    @StatusSurat      VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+    IF NOT EXISTS (SELECT 1 FROM SuratPengantar WHERE IdSurat = @IdSurat)
+    BEGIN
+        RAISERROR('Data Surat tidak ditemukan.', 16, 1);
+        RETURN;
+    END
+ 
+    UPDATE SuratPengantar
+    SET NIK              = @NIK,
+        JenisSurat       = @JenisSurat,
+        TanggalPengajuan = @TanggalPengajuan,
+        StatusSurat      = @StatusSurat
+    WHERE IdSurat = @IdSurat;
+END;
+GO

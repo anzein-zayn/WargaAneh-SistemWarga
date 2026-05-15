@@ -148,3 +148,33 @@ BEGIN
     INSERT INTO Warga (NIK, Nama, TempatLahir, TanggalLahir, JenisKelamin, NoKK, StatusKeluarga)
     VALUES (@NIK, @Nama, @TempatLahir, @TanggalLahir, @JenisKelamin, @NoKK, @StatusKeluarga);
 END;
+
+
+CREATE PROCEDURE SP_UpdateWarga
+    @NIK            VARCHAR(16),
+    @Nama           VARCHAR(100),
+    @TempatLahir    VARCHAR(100),
+    @TanggalLahir   DATE,
+    @JenisKelamin   VARCHAR(20),
+    @NoKK           INT,
+    @StatusKeluarga VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+    IF NOT EXISTS (SELECT 1 FROM Warga WHERE NIK = @NIK)
+    BEGIN
+        RAISERROR('Data Warga dengan NIK tersebut tidak ditemukan.', 16, 1);
+        RETURN;
+    END
+ 
+    UPDATE Warga
+    SET Nama           = @Nama,
+        TempatLahir    = @TempatLahir,
+        TanggalLahir   = @TanggalLahir,
+        JenisKelamin   = @JenisKelamin,
+        NoKK           = @NoKK,
+        StatusKeluarga = @StatusKeluarga
+    WHERE NIK = @NIK;
+END;
+GO

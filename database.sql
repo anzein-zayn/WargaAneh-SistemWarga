@@ -81,14 +81,14 @@ CREATE VIEW vw_KartuKeluarga AS
     LEFT JOIN Warga w ON kk.NoKK = w.NoKK
     GROUP BY kk.NoKK, kk.NoKK, kk.KepalaKeluarga, kk.Alamat, kk.RT;
 
-	CREATE VIEW vw_SuratPengantar AS
-    SELECT
-        sp.IdSurat,
-        sp.NIK,
-        w.Nama,
-        sp.JenisSurat,
-        sp.TanggalPengajuan,
-        sp.StatusSurat
-    FROM SuratPengantar sp
-    INNER JOIN Warga w ON sp.NIK = w.NIK;
-GO
+CREATE VIEW vw_SuratPengantar AS
+SELECT
+    sp.IdSurat,
+    sp.NIK,
+    w.Nama,
+    sp.JenisSurat,
+    sp.TanggalPengajuan,
+    sp.StatusSurat
+FROM SuratPengantar sp
+INNER JOIN Warga w ON sp.NIK = w.NIK;
+

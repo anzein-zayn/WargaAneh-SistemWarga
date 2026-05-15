@@ -379,3 +379,18 @@ BEGIN
 END;
 GO
  
+  --LOGIN---
+
+CREATE PROCEDURE SP_LoginUser
+    @Username NVARCHAR(50),
+    @Password NVARCHAR(255)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT IdUser, Username, Role
+    FROM Users
+    WHERE Username = @Username
+      AND Password = @Password;
+END;
+GO

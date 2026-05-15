@@ -362,3 +362,20 @@ BEGIN
     WHERE IdSurat = @IdSurat;
 END;
 GO
+
+CREATE PROCEDURE SP_DeleteSuratPengantar
+    @IdSurat INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+    IF NOT EXISTS (SELECT 1 FROM SuratPengantar WHERE IdSurat = @IdSurat)
+    BEGIN
+        RAISERROR('Data Surat tidak ditemukan.', 16, 1);
+        RETURN;
+    END
+ 
+    DELETE FROM SuratPengantar WHERE IdSurat = @IdSurat;
+END;
+GO
+ 

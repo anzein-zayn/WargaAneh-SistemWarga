@@ -268,3 +268,20 @@ BEGIN
     WHERE NoKK = @NoKK;
 END;
 GO
+
+ 
+CREATE PROCEDURE SP_DeleteKartuKeluarga
+    @NoKK INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+    IF NOT EXISTS (SELECT 1 FROM KartuKeluarga WHERE NoKK = @NoKK)
+    BEGIN
+        RAISERROR('Data KartuKeluarga tidak ditemukan.', 16, 1);
+        RETURN;
+    END
+ 
+    DELETE FROM KartuKeluarga WHERE NoKK = @NoKK;
+END;
+GO

@@ -104,3 +104,16 @@ BEGIN
     FROM vw_Warga
     ORDER BY Nama;
 END;
+
+
+CREATE PROCEDURE SP_SearchWarga
+    @Keyword NVARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT NIK, Nama, JenisKelamin, TanggalLahir, TempatLahir, NoKK, NoKK, StatusKeluarga
+    FROM vw_Warga
+    WHERE Nama LIKE '%' + @Keyword + '%'
+       OR NIK  LIKE '%' + @Keyword + '%'
+    ORDER BY Nama;
+END;

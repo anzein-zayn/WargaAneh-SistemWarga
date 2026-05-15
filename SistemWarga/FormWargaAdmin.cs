@@ -92,6 +92,22 @@ namespace SistemWarga
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
+            string jenisKelamin = cmbJK.SelectedItem?.ToString();
+            string statusKeluarga = cmbSK.SelectedItem?.ToString();
+
+            if (jenisKelamin == "P" && statusKeluarga == "Kepala Keluarga")
+            {
+                MessageBox.Show("P tidak boleh menjadi Kepala Keluarga!",
+                                "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (jenisKelamin == "L" && statusKeluarga == "Istri")
+            {
+                MessageBox.Show("L tidak boleh memilih status Istri!",
+                                "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 if (conn.State == System.Data.ConnectionState.Closed)

@@ -206,3 +206,15 @@ BEGIN
 END;
 GO
  
+
+CREATE PROCEDURE SP_SearchKartuKeluarga
+    @Keyword NVARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT  NoKK, KepalaKeluarga, Alamat, RT, JumlahAnggota
+    FROM vw_KartuKeluarga
+    WHERE KepalaKeluarga LIKE '%' + @Keyword + '%'
+       OR NoKK LIKE '%' + @Keyword + '%';
+END;
+GO

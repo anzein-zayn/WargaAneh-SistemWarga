@@ -1,191 +1,68 @@
-﻿using System;
+﻿
+using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace SistemWarga
 {
-    public partial class FormKeluargaPetugas: Form
+    public partial class FormKeluargaPetugas : Form
     {
-        private readonly SqlConnection conn;
         private readonly string connectionString =
-        ("Data Source=DESKTOP-V6AL6JT\\ZAKYZEIN;Initial Catalog=SistemWarga;Integrated Security=True");
+            "Data Source=DESKTOP-V6AL6JT\\ZAKYZEIN;Initial Catalog=SistemWarga;Integrated Security=True";
+
+        private BindingSource bindingSource = new BindingSource();
+        private DataTable dtKK = new DataTable();
+
 
         public FormKeluargaPetugas()
         {
             InitializeComponent();
-            conn = new SqlConnection(connectionString);
         }
-        private void AutoConnect()
+
+        private void FormKeluargaAdmin_Load(object sender, EventArgs e)
         {
-            try
-            {
-                if (conn.State == System.Data.ConnectionState.Closed)
-                    conn.Open();
+            // TODO: This line of code loads data into the 'sistemWargaDataSet5.KartuKeluarga' table. You can move, or remove it, as needed.
+            this.kartuKeluargaTableAdapter.Fill(this.sistemWargaDataSet5.KartuKeluarga);
+            dgvKartuKeluargaPetugas.AutoGenerateColumns = true;
+            dgvKartuKeluargaPetugas.DataSource = bindingSource;
+            dgvKartuKeluargaPetugas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvKartuKeluargaPetugas.MultiSelect = false;
+            dgvKartuKeluargaPetugas.ReadOnly = true;
+            dgvKartuKeluargaPetugas.AllowUserToAddRows = false;
+            dgvKartuKeluargaPetugas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-                this.Text = " Terhubung ✓";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Koneksi gagal: " + ex.Message,
-                                "Error Koneksi",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-            }
+            bindingNavigator1.BindingSource = bindingSource;
+            bindingSource.PositionChanged += BindingSource_PositionChanged;
+
+            LoadData();
+            HitungTotal();
         }
-        private void btnLoad_Click(object sender, EventArgs e)
+
+
+        private void LoadData()
         {
-            try
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                if (conn.State == System.Data.ConnectionState.Closed)
+                using (SqlCommand cmd = new SqlCommand("sp_GetAllKartuKeluarga", conn))
                 {
-                    conn.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        dtKK = new DataTable();
+                        da.Fill(dtKK);
+
+                        bindingSource.DataSource = dtKK;
+                        dgvKartuKeluargaPetugas.DataSource = bindingSource;
+
+                        BindControls();
+                    }
                 }
-
-
-                dgvKartuKeluargaPetugas.Rows.Clear();
-                dgvKartuKeluargaPetugas.Columns.Clear();
-
-                dgvKartuKeluargaPetugas.Columns.Add("KepalaKeluarga", "Kepala Keluarga");
-                dgvKartuKeluargaPetugas.Columns.Add("NoKK", "NoKK");
-                dgvKartuKeluargaPetugas.Columns.Add("Alamat", "Alamat");
-                dgvKartuKeluargaPetugas.Columns.Add("RT", "RT");
-                string query = "SELECT * FROM KartuKeluarga";
-
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                dgvKartuKeluargaPetugas.Rows.Add(
-                reader["KepalaKeluarga"].ToString(),
-                reader["NoKK"].ToString(),
-                reader["Alamat"].ToString(),
-                reader["RT"].ToString()
-
-
-
-                );
-                }
-
-                reader.Close();
             }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show("Gagal menampilkan data: " + ex.Message);
-
-            }
+            HitungTotal();
         }
-        private void btnInsert_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (conn.State == System.Data.ConnectionState.Closed)
-                { conn.Open(); }
 
-                if (txtKepalaKeluarga.Text == "")
-                {
-                    MessageBox.Show("KepalaKeluarga harus diisi");
-                    txtKepalaKeluarga.Focus();
-                    return;
-                }
-
-
-
-                if (txtNoKK.Text == "")
-                {
-                    MessageBox.Show("NoKK harus diisi");
-                    txtNoKK.Focus();
-                    return;
-                }
-
-                if (txtRT.Text == "")
-                {
-                    MessageBox.Show("RT harus diisi");
-                    txtRT.Focus();
-                    return;
-                }
-
-                if (txtAlamat.Text == "")
-                {
-                    MessageBox.Show("Alamat harus diisi");
-                    txtAlamat.Focus();
-                    return;
-                }
-
-                string query = @"INSERT INTO KartuKeluarga
-                                (KepalaKeluarga, NoKK , RT, Alamat)
-                                VALUES
-                               (@KepalaKeluarga, @NoKK ,@RT, @Alamat)";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-
-                cmd.Parameters.AddWithValue("@KepalaKeluarga",txtKepalaKeluarga.Text);
-                cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text);
-                cmd.Parameters.AddWithValue("@RT", txtRT.Text);
-                cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text);
-         
-
-                int result = cmd.ExecuteNonQuery();
-
-                if (result > 0)
-                {
-                    MessageBox.Show("Data Warga berhasil ditambahkan");
-                    ClearForm();
-                    btnLoad.PerformClick();
-                }
-                else
-                {
-                    MessageBox.Show("Data gagal ditambahkan");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-        }
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (conn.State == System.Data.ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
-                string query = @"UPDATE KartuKeluarga
-                                SET KepalaKeluarga = @KepalaKeluarga,
-                                NoKK = @NoKK,
-                                RT = @RT,
-                                Alamat = @Alamat,
-                                WHERE NoKK = @NoKK";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-
-                cmd.Parameters.AddWithValue("@KepalaKeluarga", txtKepalaKeluarga.Text);
-                cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text);
-                cmd.Parameters.AddWithValue("@RT", txtRT.Text);
-                cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text);
-
-                int result = cmd.ExecuteNonQuery();
-
-                if (result > 0)
-                {
-                    MessageBox.Show("Data berhasil diupdate");
-                    ClearForm();
-                    btnLoad.PerformClick();
-                }
-
-                else
-                {
-                    MessageBox.Show("Data tidak ditemukan");
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show("Terjadi kesalahan: " + ex.Message);
-            }
-        }
 
         private void dgvKartuKeluargaPetugas_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -197,65 +74,172 @@ namespace SistemWarga
                 txtNoKK.Text = row.Cells["NoKK"].Value.ToString();
                 txtRT.Text = row.Cells["RT"].Value.ToString();
                 txtAlamat.Text = row.Cells["Alamat"].Value.ToString();
-
-            
             }
         }
+        private void HitungTotal()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_CountKartuKeluarga", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        SqlParameter outputParam = new SqlParameter("@Total", SqlDbType.Int);
+                        outputParam.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(outputParam);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+
+                        lblTotal.Text = "Total KK: " + outputParam.Value.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal menghitung total: " + ex.Message);
+            }
+        }
+
+        private void BindControls()
+        {
+            if (bindingSource.Current == null) return;
+            DataRowView row = (DataRowView)bindingSource.Current;
+
+            txtKepalaKeluarga.Text = row["KepalaKeluarga"].ToString();
+            txtRT.Text = row["RT"].ToString();
+            txtAlamat.Text = row["Alamat"].ToString();
+
+        }
+
+        private void BindingSource_PositionChanged(object sender, EventArgs e)
+        {
+            BindControls();
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_SearchKartuKeluarga", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Keyword", txtNoKK.Text.Trim());
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            dtKK = new DataTable();
+                            da.Fill(dtKK);
+                            bindingSource.DataSource = dtKK;
+                            dgvKartuKeluargaPetugas.DataSource = bindingSource;
+                        }
+                    }
+                }
+
+                if (dtKK.Rows.Count == 0) MessageBox.Show("Data tidak ditemukan.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal mencari data: " + ex.Message);
+            }
+        }
+
+        private void btnInsert_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_InsertKartuKeluarga", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text.Trim());
+                        cmd.Parameters.AddWithValue("@KepalaKeluarga", txtKepalaKeluarga.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text.Trim());
+                        cmd.Parameters.AddWithValue("@RT", txtRT.Text.Trim());
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Data KK berhasil ditambahkan.");
+                ClearForm();
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_UpdateKartuKeluarga", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text.Trim());
+                        cmd.Parameters.AddWithValue("@KepalaKeluarga", txtKepalaKeluarga.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text.Trim());
+                        cmd.Parameters.AddWithValue("@RT", txtRT.Text.Trim());
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Data berhasil diupdate.");
+                ClearForm();
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan: " + ex.Message);
+            }
+        }
+
+        
+
+
         private void ClearForm()
         {
-            txtKepalaKeluarga.Clear();
-            txtNoKK.Clear();
-            txtRT.Clear();
-            txtAlamat.Clear();
+            txtKepalaKeluarga.Clear(); txtNoKK.Clear();
+            txtRT.Clear(); txtAlamat.Clear();
+
             txtNoKK.Focus();
         }
-        private void FormWargaPetugas_Load(object sender, EventArgs e)
-        {
-            
-
-            dgvKartuKeluargaPetugas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvKartuKeluargaPetugas.MultiSelect = false;
-            dgvKartuKeluargaPetugas.ReadOnly = true;
-            dgvKartuKeluargaPetugas.AllowUserToAddRows = false;
-            dgvKartuKeluargaPetugas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-            dgvKartuKeluargaPetugas.CellClick += dgvKartuKeluargaPetugas_CellClick;
-
-            AutoConnect();
-        }
-
 
         private void txtNoKK_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Hanya izinkan angka (0-9) dan backspace
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true; // Blokir karakter selain angka
-            }
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back) e.Handled = true;
         }
 
-        // Untuk txtNIK
-        private void txtKK_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtKepalaKeluarga_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Hanya izinkan angka (0-9) dan backspace
-            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back) e.Handled = true;
         }
-
-
         private void txtRT_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Hanya izinkan angka (0-9) dan backspace
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back) e.Handled = true;
         }
-
 
 
     }
 }
-

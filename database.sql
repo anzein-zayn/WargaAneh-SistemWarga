@@ -217,7 +217,7 @@ BEGIN
     WHERE KepalaKeluarga LIKE '%' + @Keyword + '%'
        OR NoKK LIKE '%' + @Keyword + '%';
 END;
-GO
+
 
  
 CREATE PROCEDURE SP_InsertKartuKeluarga
@@ -240,7 +240,7 @@ BEGIN
     SELECT @NewId = ISNULL(MAX(NoKK), 0) + 1 FROM KartuKeluarga;
  
     INSERT INTO KartuKeluarga ( NoKK, KepalaKeluarga, Alamat, RT)
-    VALUES (@NewId, @NoKK, @KepalaKeluarga, @Alamat, @RT);
+    VALUES (@NoKK, @KepalaKeluarga, @Alamat, @RT);
 END;
 GO
 

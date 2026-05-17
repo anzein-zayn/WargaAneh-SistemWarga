@@ -105,6 +105,36 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SistemWargaDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SistemWargaDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SistemWargaDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SistemWargaDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SistemWargaDataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SistemWargaDataSet2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SistemWargaDataSet3.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SistemWargaDataSet3.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SistemWargaDataSet4.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SistemWargaDataSet4.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SistemWargaDataSet5.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SistemWargaDataSet5.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Utama.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +187,72 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SistemWargaDataSet.xsc">
+      <DependentUpon>SistemWargaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SistemWargaDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SistemWargaDataSet.xss">
+      <DependentUpon>SistemWargaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet1.xsc">
+      <DependentUpon>SistemWargaDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SistemWargaDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SistemWargaDataSet1.xss">
+      <DependentUpon>SistemWargaDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet2.xsc">
+      <DependentUpon>SistemWargaDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SistemWargaDataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SistemWargaDataSet2.xss">
+      <DependentUpon>SistemWargaDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet3.xsc">
+      <DependentUpon>SistemWargaDataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet3.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SistemWargaDataSet3.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SistemWargaDataSet3.xss">
+      <DependentUpon>SistemWargaDataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet4.xsc">
+      <DependentUpon>SistemWargaDataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet4.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SistemWargaDataSet4.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SistemWargaDataSet4.xss">
+      <DependentUpon>SistemWargaDataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet5.xsc">
+      <DependentUpon>SistemWargaDataSet5.xsd</DependentUpon>
+    </None>
+    <None Include="SistemWargaDataSet5.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SistemWargaDataSet5.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SistemWargaDataSet5.xss">
+      <DependentUpon>SistemWargaDataSet5.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

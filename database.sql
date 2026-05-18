@@ -95,6 +95,24 @@ INNER JOIN Warga w ON sp.NIK = w.NIK;
 
 ---WARGA---
 
+CREATE PROCEDURE sp_CountWarga
+	@Total INT OUTPUT
+	as
+	BEGIN
+	SET NOCOUNT ON;
+	SELECT @Total = COUNT(*)FROM Warga
+
+END;
+
+CREATE PROCEDURE sp_CountKartuKeluarga
+	@Total INT OUTPUT
+	as
+	BEGIN
+	SET NOCOUNT ON;
+	SELECT @Total = COUNT(*)FROM KartuKeluarga
+
+END;
+
 CREATE PROCEDURE SP_GetAllWarga
 AS
 BEGIN
@@ -394,3 +412,7 @@ BEGIN
       AND Password = @Password;
 END;
 GO
+
+SELECT *
+INTO Warga_Backup
+FROM Warga;

@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWargaPetugas));
-            this.btnConnect = new System.Windows.Forms.Button();
             this.btnTambah = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
@@ -76,18 +75,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnConnect
-            // 
-            this.btnConnect.BackColor = System.Drawing.Color.SaddleBrown;
-            this.btnConnect.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConnect.ForeColor = System.Drawing.Color.White;
-            this.btnConnect.Location = new System.Drawing.Point(557, 247);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(84, 43);
-            this.btnConnect.TabIndex = 0;
-            this.btnConnect.Text = "Connect";
-            this.btnConnect.UseVisualStyleBackColor = false;
             // 
             // btnTambah
             // 
@@ -439,9 +426,9 @@
             this.btnSearch.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnSearch.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.White;
-            this.btnSearch.Location = new System.Drawing.Point(557, 348);
+            this.btnSearch.Location = new System.Drawing.Point(557, 247);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(84, 49);
+            this.btnSearch.Size = new System.Drawing.Size(84, 40);
             this.btnSearch.TabIndex = 0;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = false;
@@ -490,7 +477,6 @@
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnTambah);
-            this.Controls.Add(this.btnConnect);
             this.Name = "FormWargaPetugas";
             this.Text = "FormWargaPetugas";
             this.Load += new System.EventHandler(this.FormWarga_Load);
@@ -507,8 +493,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Button btnTambah;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnLoad;

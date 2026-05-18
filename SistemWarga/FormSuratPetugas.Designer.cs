@@ -36,11 +36,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtIdSurat = new System.Windows.Forms.TextBox();
+            this.suratPengantarBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.sistemWargaDataSet5 = new SistemWarga.SistemWargaDataSet5();
             this.txtNIK = new System.Windows.Forms.TextBox();
             this.dtpTP = new System.Windows.Forms.DateTimePicker();
             this.cmbJS = new System.Windows.Forms.ComboBox();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
-            this.btnConnect = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnInsert = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
@@ -48,27 +49,25 @@
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
+            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
+            this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.sistemWargaDataSet5 = new SistemWarga.SistemWargaDataSet5();
-            this.suratPengantarBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.suratPengantarTableAdapter = new SistemWarga.SistemWargaDataSet5TableAdapters.SuratPengantarTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.suratPengantarBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sistemWargaDataSet5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSurat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sistemWargaDataSet5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.suratPengantarBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -135,6 +134,16 @@
             this.txtIdSurat.TabIndex = 1;
             this.txtIdSurat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtIDSurat_KeyPress);
             // 
+            // suratPengantarBindingSource
+            // 
+            this.suratPengantarBindingSource.DataMember = "SuratPengantar";
+            this.suratPengantarBindingSource.DataSource = this.sistemWargaDataSet5;
+            // 
+            // sistemWargaDataSet5
+            // 
+            this.sistemWargaDataSet5.DataSetName = "SistemWargaDataSet5";
+            this.sistemWargaDataSet5.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // txtNIK
             // 
             this.txtNIK.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.suratPengantarBindingSource, "NIK", true));
@@ -172,18 +181,6 @@
             this.cmbStatus.Size = new System.Drawing.Size(212, 24);
             this.cmbStatus.TabIndex = 3;
             // 
-            // btnConnect
-            // 
-            this.btnConnect.BackColor = System.Drawing.Color.SaddleBrown;
-            this.btnConnect.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConnect.ForeColor = System.Drawing.Color.Azure;
-            this.btnConnect.Location = new System.Drawing.Point(396, 363);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(75, 41);
-            this.btnConnect.TabIndex = 4;
-            this.btnConnect.Text = "Connect";
-            this.btnConnect.UseVisualStyleBackColor = false;
-            // 
             // btnLoad
             // 
             this.btnLoad.BackColor = System.Drawing.Color.SaddleBrown;
@@ -202,7 +199,7 @@
             this.btnInsert.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnInsert.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInsert.ForeColor = System.Drawing.Color.Azure;
-            this.btnInsert.Location = new System.Drawing.Point(477, 363);
+            this.btnInsert.Location = new System.Drawing.Point(396, 363);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(75, 41);
             this.btnInsert.TabIndex = 4;
@@ -286,6 +283,31 @@
             this.bindingNavigator1.TabIndex = 8;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
+            // bindingNavigatorAddNewItem
+            // 
+            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
+            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
+            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(29, 24);
+            this.bindingNavigatorAddNewItem.Text = "Add new";
+            // 
+            // bindingNavigatorCountItem
+            // 
+            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(45, 24);
+            this.bindingNavigatorCountItem.Text = "of {0}";
+            this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
+            // 
+            // bindingNavigatorDeleteItem
+            // 
+            this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
+            this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
+            this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(29, 24);
+            this.bindingNavigatorDeleteItem.Text = "Delete";
+            // 
             // bindingNavigatorMoveFirstItem
             // 
             this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -319,16 +341,9 @@
             this.bindingNavigatorPositionItem.Text = "0";
             this.bindingNavigatorPositionItem.ToolTipText = "Current position";
             // 
-            // bindingNavigatorCountItem
-            // 
-            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(45, 24);
-            this.bindingNavigatorCountItem.Text = "of {0}";
-            this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-            // 
             // bindingNavigatorSeparator1
             // 
-            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator";
+            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
             this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // bindingNavigatorMoveNextItem
@@ -351,49 +366,21 @@
             // 
             // bindingNavigatorSeparator2
             // 
-            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator";
+            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 27);
-            // 
-            // bindingNavigatorAddNewItem
-            // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(29, 24);
-            this.bindingNavigatorAddNewItem.Text = "Add new";
-            // 
-            // bindingNavigatorDeleteItem
-            // 
-            this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-            this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-            this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(29, 24);
-            this.bindingNavigatorDeleteItem.Text = "Delete";
             // 
             // btnSearch
             // 
             this.btnSearch.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnSearch.Font = new System.Drawing.Font("Geometr706 BlkCn BT", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.Azure;
-            this.btnSearch.Location = new System.Drawing.Point(558, 363);
+            this.btnSearch.Location = new System.Drawing.Point(477, 363);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 41);
             this.btnSearch.TabIndex = 4;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // sistemWargaDataSet5
-            // 
-            this.sistemWargaDataSet5.DataSetName = "SistemWargaDataSet5";
-            this.sistemWargaDataSet5.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // suratPengantarBindingSource
-            // 
-            this.suratPengantarBindingSource.DataMember = "SuratPengantar";
-            this.suratPengantarBindingSource.DataSource = this.sistemWargaDataSet5;
             // 
             // suratPengantarTableAdapter
             // 
@@ -413,7 +400,6 @@
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnInsert);
             this.Controls.Add(this.btnLoad);
-            this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.cmbStatus);
             this.Controls.Add(this.cmbJS);
             this.Controls.Add(this.dtpTP);
@@ -428,13 +414,13 @@
             this.Name = "FormSuratPetugas";
             this.Text = "FormSurat";
             this.Load += new System.EventHandler(this.FormSuratPetugas_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.suratPengantarBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sistemWargaDataSet5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSurat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sistemWargaDataSet5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.suratPengantarBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -452,7 +438,6 @@
         private System.Windows.Forms.DateTimePicker dtpTP;
         private System.Windows.Forms.ComboBox cmbJS;
         private System.Windows.Forms.ComboBox cmbStatus;
-        private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnInsert;
         private System.Windows.Forms.Button btnUpdate;

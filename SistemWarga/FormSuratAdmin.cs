@@ -140,7 +140,6 @@ namespace SistemWarga
             catch (Exception ex) { MessageBox.Show("Gagal mencari data: " + ex.Message); }
         }
 
-        // ── INSERT ────────────────────────────────────────────────
         private void btnInsert_Click(object sender, EventArgs e)
         {
             if (!ValidasiForm()) return;
@@ -157,6 +156,9 @@ namespace SistemWarga
                         cmd.Parameters.AddWithValue("@JenisSurat", cmbJS.Text);
                         cmd.Parameters.AddWithValue("@TanggalPengajuan", dtpTP.Value.Date);
                         cmd.Parameters.AddWithValue("@StatusSurat", cmbStatus.Text);
+                        cmd.Parameters.AddWithValue("@IdSurat", txtNIK.Text.Trim());
+
+
 
                         conn.Open();
                         cmd.ExecuteNonQuery();
@@ -201,7 +203,6 @@ namespace SistemWarga
             catch (Exception ex) { MessageBox.Show("Terjadi kesalahan: " + ex.Message); }
         }
 
-        // ── DELETE ────────────────────────────────────────────────
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (selectedIdSurat == 0)

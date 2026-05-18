@@ -144,6 +144,8 @@ namespace SistemWarga
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
+                        cmd.Parameters.AddWithValue("@NoKK", txtNIK.Text.Trim());
+
                         cmd.Parameters.AddWithValue("@NIK", txtNIK.Text.Trim());
                         cmd.Parameters.AddWithValue("@Nama", txtNama.Text.Trim());
                         cmd.Parameters.AddWithValue("@TempatLahir", txtTempatLahir.Text.Trim());
@@ -193,6 +195,7 @@ namespace SistemWarga
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
+                        cmd.Parameters.AddWithValue("@NoKK", txtNIK.Text.Trim());
                         cmd.Parameters.AddWithValue("@NIK", txtNIK.Text.Trim());
                         cmd.Parameters.AddWithValue("@Nama", txtNama.Text.Trim());
                         cmd.Parameters.AddWithValue("@TempatLahir", txtTempatLahir.Text.Trim());
@@ -288,10 +291,10 @@ namespace SistemWarga
                     conn.Open();
 
                     string query = @"
-                    IF OBJECT_ID('dbo. Warga_Backup') IS NOT NULL
+                    IF OBJECT_ID('dbo.Warga_Backup') IS NOT NULL
                     BEGIN
                     DELETE FROM dbo.Warga;
-                    INSERT INTO dbo. Warga
+                    INSERT INTO dbo.Warga
                     SELECT * FROM dbo.Warga_Backup;
                     END";
 
@@ -374,38 +377,29 @@ namespace SistemWarga
 
         private void txtNoKK_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Hanya izinkan angka (0-9) dan backspace
+            
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
             }
         }
 
-        // Untuk txtNIK
-        private void txtNIK_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Hanya izinkan angka (0-9) dan backspace
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
-        }
 
         private void txtNamaLengkap_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Izinkan: huruf (a-z, A-Z), angka (0-9), backspace
+            
             if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back)
             {
-                e.Handled = true; // Blokir karakter lainnya
+                e.Handled = true; 
             }
         }
 
         private void txtTL_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Izinkan: huruf (a-z, A-Z), angka (0-9), backspace
+            
             if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
             {
-                e.Handled = true; // Blokir karakter lainnya
+                e.Handled = true; 
             }
         }
 
@@ -436,6 +430,7 @@ namespace SistemWarga
 
             catch (Exception ex)
             {
+
                 MessageBox.Show(ex.Message);
             }
         }

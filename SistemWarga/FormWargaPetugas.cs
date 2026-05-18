@@ -144,6 +144,7 @@ namespace SistemWarga
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
+                        cmd.Parameters.AddWithValue("@NoKK", txtNIK.Text.Trim());
                         cmd.Parameters.AddWithValue("@NIK", txtNIK.Text.Trim());
                         cmd.Parameters.AddWithValue("@Nama", txtNama.Text.Trim());
                         cmd.Parameters.AddWithValue("@TempatLahir", txtTempatLahir.Text.Trim());
@@ -193,6 +194,7 @@ namespace SistemWarga
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
+                        cmd.Parameters.AddWithValue("@NoKK", txtNIK.Text.Trim());
                         cmd.Parameters.AddWithValue("@NIK", txtNIK.Text.Trim());
                         cmd.Parameters.AddWithValue("@Nama", txtNama.Text.Trim());
                         cmd.Parameters.AddWithValue("@TempatLahir", txtTempatLahir.Text.Trim());
@@ -225,6 +227,7 @@ namespace SistemWarga
             if (bindingSource.Current == null) return;
             DataRowView row = (DataRowView)bindingSource.Current;
 
+            txtNoKK.Text = row["NoKK"].ToString();
             txtNIK.Text = row["NIK"].ToString();
             txtNama.Text = row["Nama"].ToString();
             cmbJK.Text = row["JenisKelamin"].ToString();

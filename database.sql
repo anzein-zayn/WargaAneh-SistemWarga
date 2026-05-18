@@ -57,6 +57,10 @@ VALUES
     (2,'3371010101010003', 'Surat Keterangan Tidak Mampu', '2025-02-15', 'Pending'),
     (3,'3371010101010004', 'Surat Pengantar SKCK', '2025-03-01', 'Selesai');
 
+	ALTER TABLE Warga ADD CONSTRAINT
+    CHK_NIK_AngkaSaja
+    CHECK (NIK NOT LIKE '%[^0-9]%');
+
 CREATE VIEW vw_Warga AS
     SELECT
         w.NIK,

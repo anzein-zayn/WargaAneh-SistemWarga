@@ -4,17 +4,17 @@
 
 #define MyAppName "Sistem Warga App"
 #define MyAppVersion "1.5"
-#define MyAppPublisher "F11, Inc."
+#define MyAppPublisher "F11,, Inc."
 #define MyAppURL "https://www.example.com/"
 #define MyAppExeName "SistemWarga.exe"
-#define MyAppAssocName MyAppName + " "
+#define MyAppAssocName MyAppName + ""
 #define MyAppAssocExt ".exe"
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{A7EA2390-0AE7-4D1F-B0B3-A6BAB3DFB3AA}
+AppId={{C57F66ED-5CE2-497F-B176-894322CA2C0D}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -37,7 +37,7 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only).
 ;PrivilegesRequired=lowest
 OutputDir=D:\Semester 4\PABD\PROJECT SISTEM WARGA\SistemWarga\Setup
-OutputBaseFilename=Steup SIstem Warga
+OutputBaseFilename=Setup Sistem Warga
 SolidCompression=yes
 WizardStyle=modern dynamic
 

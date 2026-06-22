@@ -26,8 +26,8 @@ namespace SistemWarga.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-V6AL6JT\\ZAKYZEIN;Initial Catalog=SistemWarga;Persist Security" +
-            " Info=True;User ID=sa;TrustServerCertificate=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"Data Source=192.168.1.11,1433;Initial Catalog=SistemWarga;User ID=sa;Password=12" +
+            "345678;TrustServerCertificate=True;\"")]
         public string SistemWargaConnectionString {
             get {
                 return ((string)(this["SistemWargaConnectionString"]));
@@ -37,8 +37,8 @@ namespace SistemWarga.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-V6AL6JT\\ZAKYZEIN;Initial Catalog=SistemWarga;Integrated Secur" +
-            "ity=True;TrustServerCertificate=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"Data Source=192.168.1.11,1433;Initial Catalog=SistemWarga;User ID=sa;Password=12" +
+            "345678;TrustServerCertificate=True;\"")]
         public string SistemWargaConnectionString1 {
             get {
                 return ((string)(this["SistemWargaConnectionString1"]));

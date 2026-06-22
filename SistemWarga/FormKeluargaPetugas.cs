@@ -9,7 +9,7 @@ namespace SistemWarga
     public partial class FormKeluargaPetugas : Form
     {
         private readonly string connectionString =
-            "Data Source=DESKTOP-V6AL6JT\\ZAKYZEIN;Initial Catalog=SistemWarga;Integrated Security=True";
+            "Data Source=192.168.1.11,1433;Initial Catalog=SistemWarga;User ID=sa;Password=12345678;TrustServerCertificate=True;";
 
         private BindingSource bindingSource = new BindingSource();
         private DataTable dtKK = new DataTable();
@@ -20,10 +20,8 @@ namespace SistemWarga
             InitializeComponent();
         }
 
-        private void FormKeluargaAdmin_Load(object sender, EventArgs e)
+        private void FormKeluargaPetugas_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'sistemWargaDataSet5.KartuKeluarga' table. You can move, or remove it, as needed.
-            this.kartuKeluargaTableAdapter.Fill(this.sistemWargaDataSet5.KartuKeluarga);
             dgvKartuKeluargaPetugas.AutoGenerateColumns = true;
             dgvKartuKeluargaPetugas.DataSource = bindingSource;
             dgvKartuKeluargaPetugas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -66,15 +64,14 @@ namespace SistemWarga
 
         private void dgvKartuKeluargaPetugas_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dgvKartuKeluargaPetugas.Rows[e.RowIndex];
+            if (e.RowIndex < 0) return;
 
-                txtKepalaKeluarga.Text = row.Cells["KepalaKeluarga"].Value.ToString();
-                txtNoKK.Text = row.Cells["NoKK"].Value.ToString();
-                txtRT.Text = row.Cells["RT"].Value.ToString();
-                txtAlamat.Text = row.Cells["Alamat"].Value.ToString();
-            }
+            DataGridViewRow row = dgvKartuKeluargaPetugas.Rows[e.RowIndex];
+
+            txtKepalaKeluarga.Text = row.Cells["KepalaKeluarga"].Value?.ToString() ?? "";
+            txtNoKK.Text = row.Cells["NoKK"].Value?.ToString() ?? "";
+            txtRT.Text = row.Cells["RT"].Value?.ToString() ?? "";
+            txtAlamat.Text = row.Cells["Alamat"].Value?.ToString() ?? "";
         }
         private void HitungTotal()
         {
@@ -108,6 +105,7 @@ namespace SistemWarga
             if (bindingSource.Current == null) return;
             DataRowView row = (DataRowView)bindingSource.Current;
 
+            txtNoKK.Text = row["NoKK"].ToString();
             txtKepalaKeluarga.Text = row["KepalaKeluarga"].ToString();
             txtRT.Text = row["RT"].ToString();
             txtAlamat.Text = row["Alamat"].ToString();
@@ -126,25 +124,28 @@ namespace SistemWarga
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtNoKK.Text))
+            {
+                MessageBox.Show("Masukkan Nomor KK atau Nama Kepala Keluarga untuk mencari.");
+                txtNoKK.Focus();
+                return;
+            }
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("sp_SearchKartuKeluarga", conn))
                 {
-                    using (SqlCommand cmd = new SqlCommand("sp_SearchKartuKeluarga", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@Keyword", txtNoKK.Text.Trim());
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Keyword", txtNoKK.Text.Trim());
 
-                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                        {
-                            dtKK = new DataTable();
-                            da.Fill(dtKK);
-                            bindingSource.DataSource = dtKK;
-                            dgvKartuKeluargaPetugas.DataSource = bindingSource;
-                        }
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        dtKK = new DataTable();
+                        da.Fill(dtKK);
+                        bindingSource.DataSource = dtKK;
+                        dgvKartuKeluargaPetugas.DataSource = bindingSource;
                     }
                 }
-
                 if (dtKK.Rows.Count == 0) MessageBox.Show("Data tidak ditemukan.");
             }
             catch (Exception ex)
@@ -155,7 +156,7 @@ namespace SistemWarga
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-
+            if (!ValidasiForm()) return;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -186,7 +187,7 @@ namespace SistemWarga
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-
+            if (!ValidasiForm()) return;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -215,9 +216,50 @@ namespace SistemWarga
             }
         }
 
-        
+        private bool ValidasiForm()
+        {
+            if (string.IsNullOrWhiteSpace(txtNoKK.Text))
+            {
+                MessageBox.Show("Nomor KK harus diisi.");
+                txtNoKK.Focus();
+                return false;
+            }
 
+            if (txtNoKK.Text.Length != 16)
+            {
+                MessageBox.Show("Nomor KK harus 16 digit.");
+                txtNoKK.Focus();
+                return false;
+            }
 
+            if (string.IsNullOrWhiteSpace(txtKepalaKeluarga.Text))
+            {
+                MessageBox.Show("Nama Kepala Keluarga harus diisi.");
+                txtKepalaKeluarga.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtAlamat.Text))
+            {
+                MessageBox.Show("Alamat harus diisi.");
+                txtAlamat.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtRT.Text))
+            {
+                MessageBox.Show("RT harus diisi.");
+                txtRT.Focus();
+                return false;
+            }
+            if (txtRT.Text.Length > 3)
+            {
+                MessageBox.Show("RT maksimal 3 digit.");
+                txtRT.Focus();
+                return false;
+            }
+            return true;
+        }
         private void ClearForm()
         {
             txtKepalaKeluarga.Clear(); txtNoKK.Clear();
@@ -228,16 +270,40 @@ namespace SistemWarga
 
         private void txtNoKK_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back) e.Handled = true;
-        }
+            if (!char.IsDigit(e.KeyChar) &&
+                !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
 
-        private void txtKepalaKeluarga_KeyPress(object sender, KeyPressEventArgs e)
+            if (txtNoKK.Text.Length >= 16 &&
+                !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+        private void txtKK_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back) e.Handled = true;
+            if (!char.IsLetter(e.KeyChar) &&
+                !char.IsWhiteSpace(e.KeyChar) &&
+                !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
         private void txtRT_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back) e.Handled = true;
+            if (!char.IsDigit(e.KeyChar) &&
+                !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+
+            if (txtRT.Text.Length >= 3 &&
+                !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
 
 

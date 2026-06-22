@@ -1,46 +1,33 @@
-﻿using System;
+﻿using ExcelDataReader;
+using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 namespace SistemWarga
 {
     public partial class FormWargaAdmin : Form
     {
-        private readonly SqlConnection conn;
-        private readonly string connectionString =
-        ("Data Source=DESKTOP-V6AL6JT\\ZAKYZEIN;Initial Catalog=SistemWarga;Integrated Security=True");
+        static string connectionString = "Data Source=192.168.1.11,1433;Initial Catalog=SistemWarga;User ID=sa;Password=12345678;TrustServerCertificate=True;";
+
+        DAL dbLogic = new DAL();
+        bool isInitializing = true;
+        DataTable dt;
         private BindingSource bindingSource = new BindingSource();
         private DataTable dtWarga = new DataTable();
+        private DataTable dtPreviewImport;
         public FormWargaAdmin()
         {
             InitializeComponent();
-            conn = new SqlConnection(connectionString);
             dtpTL.MaxDate = DateTime.Today;
 
             // Opsional: set default value ke hari ini
             dtpTL.Value = DateTime.Today;
         }
-
-        private void AutoConnect()
-        {
-            try
-            {
-                if (conn.State == System.Data.ConnectionState.Closed)
-                    conn.Open();
-
-                this.Text = " Terhubung ✓";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Koneksi gagal: " + ex.Message,
-                                "Error Koneksi",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-            }
-        }
-
 
         private void HitungTotal()
 
@@ -76,6 +63,7 @@ namespace SistemWarga
         private void LoadWarga()
         {
 
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("sp_GetAllWarga", conn))
@@ -91,7 +79,10 @@ namespace SistemWarga
                         bindingSource.DataSource = dtWarga;
                         dgvWarga.DataSource = bindingSource;
 
-                        BindControls();
+                        if (dtWarga.Rows.Count > 0)
+                        {
+                            BindControls();
+                        }
                     }
                 }
             }
@@ -105,6 +96,11 @@ namespace SistemWarga
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtNIK.Text))
+            {
+                MessageBox.Show("Masukkan NIK atau ID yang dicari.");
+                return;
+            }
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -135,7 +131,21 @@ namespace SistemWarga
         }
         private void btnInsert_Click(object sender, EventArgs e)
         {
+            if (!ValidasiForm()) return;
 
+            string jenisKelamin = cmbJK.SelectedItem?.ToString();
+            string statusKeluarga = cmbSK.SelectedItem?.ToString();
+
+            if (jenisKelamin == "P" && statusKeluarga == "Kepala Keluarga")
+            {
+                MessageBox.Show("P tidak boleh menjadi Kepala Keluarga!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (jenisKelamin == "L" && statusKeluarga == "Istri")
+            {
+                MessageBox.Show("L tidak boleh memilih status Istri!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -144,7 +154,7 @@ namespace SistemWarga
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("@NoKK", txtNIK.Text.Trim());
+                        cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text.Trim());
 
                         cmd.Parameters.AddWithValue("@NIK", txtNIK.Text.Trim());
                         cmd.Parameters.AddWithValue("@Nama", txtNama.Text.Trim());
@@ -172,6 +182,8 @@ namespace SistemWarga
         {
             string jenisKelamin = cmbJK.SelectedItem?.ToString();
             string statusKeluarga = cmbSK.SelectedItem?.ToString();
+            if (!ValidasiForm())
+                return;
 
             if (jenisKelamin == "P" && statusKeluarga == "Kepala Keluarga")
             {
@@ -195,7 +207,7 @@ namespace SistemWarga
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("@NoKK", txtNIK.Text.Trim());
+                        cmd.Parameters.AddWithValue("@NoKK", txtNoKK.Text.Trim());
                         cmd.Parameters.AddWithValue("@NIK", txtNIK.Text.Trim());
                         cmd.Parameters.AddWithValue("@Nama", txtNama.Text.Trim());
                         cmd.Parameters.AddWithValue("@TempatLahir", txtTempatLahir.Text.Trim());
@@ -293,7 +305,9 @@ namespace SistemWarga
                     string query = @"
                     IF OBJECT_ID('dbo.Warga_Backup') IS NOT NULL
                     BEGIN
+                    DELETE FROM dbo.SuratPengantar;
                     DELETE FROM dbo.Warga;
+
                     INSERT INTO dbo.Warga
                     SELECT * FROM dbo.Warga_Backup;
                     END";
@@ -321,13 +335,24 @@ namespace SistemWarga
                 txtNoKK.Text = row.Cells["NoKK"].Value.ToString();
                 txtNama.Text = row.Cells["Nama"].Value.ToString();
                 cmbJK.Text = row.Cells["JenisKelamin"].Value.ToString();
-                dtpTL.Value = Convert.ToDateTime(row.Cells["TanggalLahir"].Value);
+
+                cmbSK.Items.Clear();
+                if (cmbJK.Text == "P")
+                    cmbSK.Items.AddRange(new object[] { "Istri", "Anak" });
+                else
+                    cmbSK.Items.AddRange(new object[] { "Kepala Keluarga", "Anak" });
+
+                cmbSK.Text = row.Cells["StatusKeluarga"].Value.ToString();
+
+                if (row.Cells["TanggalLahir"].Value != DBNull.Value)
+                    dtpTL.Value = Convert.ToDateTime(row.Cells["TanggalLahir"].Value);
+
                 txtNIK.Text = row.Cells["NIK"].Value.ToString();
                 txtTempatLahir.Text = row.Cells["TempatLahir"].Value.ToString();
-                cmbSK.Text = row.Cells["StatusKeluarga"].Value.ToString();
+                // blok duplikat dihapus
             }
         }
-        private void cmbJenisKelamin_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbJK_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbSK.Items.Clear();
             if (cmbJK.SelectedItem?.ToString() == "P")
@@ -370,6 +395,11 @@ namespace SistemWarga
             bindingNavigator1.BindingSource = bindingSource;
 
             bindingSource.PositionChanged += BindingSource_PositionChanged;
+            cmbJK.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSK.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            txtNIK.MaxLength = 16;
+            txtNoKK.MaxLength = 16;
 
             LoadWarga();
             HitungTotal();
@@ -377,8 +407,15 @@ namespace SistemWarga
 
         private void txtNoKK_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+
+            if (!char.IsDigit(e.KeyChar) &&
+                 e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+
+            if (txtNoKK.Text.Length >= 16 &&
+                e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
             }
@@ -387,19 +424,21 @@ namespace SistemWarga
 
         private void txtNamaLengkap_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
-            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+
+            if (!char.IsLetter(e.KeyChar) &&
+                e.KeyChar != ' ' &&
+                e.KeyChar != (char)Keys.Back)
             {
-                e.Handled = true; 
+                e.Handled = true;
             }
         }
 
         private void txtTL_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
+
             if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
             {
-                e.Handled = true; 
+                e.Handled = true;
             }
         }
 
@@ -414,8 +453,8 @@ namespace SistemWarga
                     conn.Open();
 
                     string query =
-                    "UPDATE Warga SET Nama='HACKED' WHERE NIK='" +
-                    txtNIK.Text + "*";
+                        "UPDATE Warga SET Nama='HACKED' WHERE NIK='" +
+                        txtNIK.Text + "'";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -423,9 +462,9 @@ namespace SistemWarga
                         MessageBox.Show(result + " baris terupdate");
                     }
                 }
-                    LoadWarga();
+                LoadWarga();
 
-                }
+            }
 
 
             catch (Exception ex)
@@ -434,10 +473,77 @@ namespace SistemWarga
                 MessageBox.Show(ex.Message);
             }
         }
-    
+
+        private void txtNIK_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) &&
+                !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+
+            if (txtNIK.Text.Length >= 16 &&
+                !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+        private bool ValidasiForm()
+        {
+            if (string.IsNullOrWhiteSpace(txtNoKK.Text))
+            {
+                MessageBox.Show("No KK harus diisi.");
+                return false;
+            }
+
+            if (txtNoKK.Text.Length != 16)
+            {
+                MessageBox.Show("No KK harus 16 digit.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtNIK.Text))
+            {
+                MessageBox.Show("NIK harus diisi.");
+                return false;
+            }
+
+            if (txtNIK.Text.Length != 16)
+            {
+                MessageBox.Show("NIK harus 16 digit.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtNama.Text))
+            {
+                MessageBox.Show("Nama harus diisi.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtTempatLahir.Text))
+            {
+                MessageBox.Show("Tempat lahir harus diisi.");
+                return false;
+            }
+
+            if (cmbJK.SelectedIndex == -1)
+            {
+                MessageBox.Show("Pilih jenis kelamin.");
+                return false;
+            }
+
+            if (cmbSK.SelectedIndex == -1)
+            {
+                MessageBox.Show("Pilih status keluarga.");
+                return false;
+            }
+
+            return true;
+        }
 
 
 
+    }
 }
-}
+
 

@@ -7,13 +7,11 @@ namespace SistemWarga
 {
     public partial class HalamanUtama: Form
     {
-        private readonly SqlConnection conn;
         private readonly string connectionString =
-        ("Data Source=DESKTOP-V6AL6JT\\ZAKYZEIN;Initial Catalog=SistemWarga;Integrated Security=True");
+        ("Data Source=192.168.1.11,1433;Initial Catalog=SistemWarga;User ID=sa;Password=12345678;TrustServerCertificate=True;");
         public HalamanUtama()
         {
             InitializeComponent();
-            conn = new SqlConnection(connectionString);
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

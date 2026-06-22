@@ -68,6 +68,8 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.wargaTableAdapter = new SistemWarga.SistemWargaDataSet5TableAdapters.WargaTableAdapter();
             this.lblTotal = new System.Windows.Forms.Label();
+            this.btnImpDB = new System.Windows.Forms.Button();
+            this.btnImpEx = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvWarga)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wargaBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sistemWargaDataSet5)).BeginInit();
@@ -275,6 +277,7 @@
             this.cmbJK.Name = "cmbJK";
             this.cmbJK.Size = new System.Drawing.Size(159, 24);
             this.cmbJK.TabIndex = 5;
+            this.cmbJK.SelectedIndexChanged += new System.EventHandler(this.cmbJK_SelectedIndexChanged);
             // 
             // cmbSK
             // 
@@ -447,12 +450,34 @@
             this.lblTotal.TabIndex = 11;
             this.lblTotal.Text = "Total Warga :";
             // 
+            // btnImpDB
+            // 
+            this.btnImpDB.Location = new System.Drawing.Point(557, 348);
+            this.btnImpDB.Name = "btnImpDB";
+            this.btnImpDB.Size = new System.Drawing.Size(84, 45);
+            this.btnImpDB.TabIndex = 12;
+            this.btnImpDB.Text = "Import to Database";
+            this.btnImpDB.UseVisualStyleBackColor = true;
+            this.btnImpDB.Click += new System.EventHandler(this.btnImportDb_Click);
+            // 
+            // btnImpEx
+            // 
+            this.btnImpEx.Location = new System.Drawing.Point(647, 348);
+            this.btnImpEx.Name = "btnImpEx";
+            this.btnImpEx.Size = new System.Drawing.Size(84, 45);
+            this.btnImpEx.TabIndex = 12;
+            this.btnImpEx.Text = "Import from Excel";
+            this.btnImpEx.UseVisualStyleBackColor = true;
+            this.btnImpEx.Click += new System.EventHandler(this.btnImpExcel_Click);
+            // 
             // FormWargaPetugas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkRed;
             this.ClientSize = new System.Drawing.Size(800, 645);
+            this.Controls.Add(this.btnImpEx);
+            this.Controls.Add(this.btnImpDB);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.pictureBox1);
@@ -531,5 +556,7 @@
         private System.Windows.Forms.BindingSource wargaBindingSource;
         private SistemWargaDataSet5TableAdapters.WargaTableAdapter wargaTableAdapter;
         private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Button btnImpDB;
+        private System.Windows.Forms.Button btnImpEx;
     }
 }

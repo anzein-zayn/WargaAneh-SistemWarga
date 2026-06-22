@@ -89,7 +89,7 @@
             this.btnTambah.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnTambah.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTambah.ForeColor = System.Drawing.Color.White;
-            this.btnTambah.Location = new System.Drawing.Point(557, 348);
+            this.btnTambah.Location = new System.Drawing.Point(535, 348);
             this.btnTambah.Name = "btnTambah";
             this.btnTambah.Size = new System.Drawing.Size(84, 46);
             this.btnTambah.TabIndex = 0;
@@ -102,7 +102,7 @@
             this.btnUpdate.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnUpdate.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpdate.ForeColor = System.Drawing.Color.White;
-            this.btnUpdate.Location = new System.Drawing.Point(647, 293);
+            this.btnUpdate.Location = new System.Drawing.Point(625, 293);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 43);
             this.btnUpdate.TabIndex = 0;
@@ -115,7 +115,7 @@
             this.btnLoad.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnLoad.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLoad.ForeColor = System.Drawing.Color.White;
-            this.btnLoad.Location = new System.Drawing.Point(557, 293);
+            this.btnLoad.Location = new System.Drawing.Point(535, 293);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(84, 49);
             this.btnLoad.TabIndex = 0;
@@ -162,6 +162,7 @@
             this.txtNIK.Name = "txtNIK";
             this.txtNIK.Size = new System.Drawing.Size(180, 22);
             this.txtNIK.TabIndex = 2;
+            this.txtNIK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNIK_KeyPress);
             // 
             // txtNama
             // 
@@ -282,6 +283,7 @@
             this.cmbJK.Name = "cmbJK";
             this.cmbJK.Size = new System.Drawing.Size(159, 24);
             this.cmbJK.TabIndex = 5;
+            this.cmbJK.SelectedIndexChanged += new System.EventHandler(this.cmbJK_SelectedIndexChanged);
             // 
             // cmbSK
             // 
@@ -297,7 +299,7 @@
             this.btnDelete.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnDelete.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(557, 247);
+            this.btnDelete.Location = new System.Drawing.Point(535, 247);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 37);
             this.btnDelete.TabIndex = 7;
@@ -444,7 +446,7 @@
             // lblTotal
             // 
             this.lblTotal.AutoSize = true;
-            this.lblTotal.Location = new System.Drawing.Point(521, 429);
+            this.lblTotal.Location = new System.Drawing.Point(325, 186);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(88, 16);
             this.lblTotal.TabIndex = 11;
@@ -473,7 +475,7 @@
             this.btnSearch.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnSearch.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.White;
-            this.btnSearch.Location = new System.Drawing.Point(647, 247);
+            this.btnSearch.Location = new System.Drawing.Point(625, 247);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 37);
             this.btnSearch.TabIndex = 7;
@@ -486,7 +488,7 @@
             this.btnReset.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnReset.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(647, 351);
+            this.btnReset.Location = new System.Drawing.Point(625, 351);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 43);
             this.btnReset.TabIndex = 0;
@@ -499,9 +501,9 @@
             this.btnInjection.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnInjection.Font = new System.Drawing.Font("Leelawadee", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInjection.ForeColor = System.Drawing.Color.White;
-            this.btnInjection.Location = new System.Drawing.Point(647, 400);
+            this.btnInjection.Location = new System.Drawing.Point(535, 400);
             this.btnInjection.Name = "btnInjection";
-            this.btnInjection.Size = new System.Drawing.Size(75, 43);
+            this.btnInjection.Size = new System.Drawing.Size(84, 43);
             this.btnInjection.TabIndex = 0;
             this.btnInjection.Text = "Tes Injeksi";
             this.btnInjection.UseVisualStyleBackColor = false;
@@ -541,7 +543,7 @@
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnTambah);
             this.Name = "FormWargaAdmin";
-            this.Text = "FormWargaPetugas";
+            this.Text = "FormWargaAdmin";
             this.Load += new System.EventHandler(this.FormWarga_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvWarga)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wargaBindingSource1)).EndInit();

@@ -1,116 +1,138 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
 
 namespace SistemWarga
 {
     public partial class FormLaporan : Form
     {
-
-        private readonly SqlConnection conn;
-        private readonly string connectionString =
-        ("Data Source=DESKTOP-V6AL6JT\\ZAKYZEIN;Initial Catalog=SistemWarga;Integrated Security=True");
+        private DAL dbLogic = new DAL();
+        private DataTable dtLaporan;
 
         public FormLaporan()
         {
             InitializeComponent();
-            conn = new SqlConnection(connectionString);
-            
-        }
-        private void AutoConnect()
-        {
-            try
-            {
-                if (conn.State == System.Data.ConnectionState.Closed)
-                    conn.Open();
-
-                this.Text = " Terhubung ✓";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Koneksi gagal: " + ex.Message,
-                                "Error Koneksi",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-            }
-        }
-        private void btnTampil_Click(object sender, EventArgs e)
-        {
-            
-            
-            string query = "";
-
-            if (cmbLaporan.Text == "Total Warga & KK")
-            {
-                query = @"SELECT 
-                 (SELECT COUNT(*) FROM Warga) AS TotalWarga,
-                 (SELECT COUNT(*) FROM KartuKeluarga) AS TotalKK";
-            }
-            else if (cmbLaporan.Text == "Jenis Kelamin")
-            {
-                query = @"SELECT JenisKelamin, COUNT(*) AS Jumlah
-                  FROM Warga
-                  GROUP BY JenisKelamin";
-            }
-            else if (cmbLaporan.Text == "Per RT")
-            {
-                query = @"SELECT KK.RT, COUNT(W.NIK) AS JumlahWarga
-                  FROM Warga W
-                  JOIN KartuKeluarga KK ON W.IdKK = KK.IdKK
-                  GROUP BY KK.RT";
-            }
-
-            try
-            {
-                conn.Open();
-                SqlDataAdapter da = new SqlDataAdapter(query, conn);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                dgvLaporan.DataSource = dt;
-                conn.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
         }
 
-        private void dgvLaporan_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dgvLaporan.Rows[e.RowIndex];
-
-                cmbLaporan.Text = row.Cells["StatusSurat"].Value.ToString();
-                
-            }
-        }
         private void FormLaporan_Load(object sender, EventArgs e)
         {
-            cmbLaporan.Items.Clear();
-            cmbLaporan.Items.Add("Total Warga & KK");
-            cmbLaporan.Items.Add("Jenis Kelamin");
-            cmbLaporan.Items.Add("Per RT");
-           
+            // Setup ComboBox Jenis Laporan
+            cmbJenisLaporan.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbJenisLaporan.Items.Clear();
+            cmbJenisLaporan.Items.AddRange(new object[]
+            {
+                "Jenis Kelamin",
+                "Per RT",
+                "Status Keluarga"
+            });
+            cmbJenisLaporan.SelectedIndex = 0;
 
+            // Setup ComboBox Tipe Data
+            cmbTipeData.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbTipeData.Items.Clear();
+            cmbTipeData.Items.AddRange(new object[]
+            {
+                "L",
+                "P"
+            });
+            cmbTipeData.SelectedIndex = 0;
+
+            // Setup DataGridView
             dgvLaporan.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvLaporan.MultiSelect = false;
             dgvLaporan.ReadOnly = true;
             dgvLaporan.AllowUserToAddRows = false;
             dgvLaporan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            dgvLaporan.CellClick += dgvLaporan_CellClick;
+            btnCetak.Enabled = false;
 
-            AutoConnect();
+            // Tampilkan data default
+            TampilkanData();
+        }
+
+        private void cmbJenisLaporan_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Update ComboBox Tipe Data sesuai dengan Jenis Laporan yang dipilih
+            cmbTipeData.Items.Clear();
+
+            string selectedJenis = cmbJenisLaporan.SelectedItem?.ToString();
+
+            switch (selectedJenis)
+            {
+                case "Jenis Kelamin":
+                    cmbTipeData.Items.AddRange(new object[] { "L", "P" });
+                    break;
+                case "Per RT":
+                    // Ambil daftar RT dari database atau isi manual
+                    // Contoh: cmbTipeData.Items.AddRange(new object[] { "1", "2", "3", "4", "5" });
+                    // Untuk sementara kita isi dengan beberapa contoh
+                    cmbTipeData.Items.AddRange(new object[] { "001","002" });
+                    break;
+                case "Status Keluarga":
+                    cmbTipeData.Items.AddRange(new object[] { "Kepala Keluarga", "Istri", "Anak" });
+                    break;
+                default:
+                    cmbTipeData.Items.AddRange(new object[] { "L", "P" });
+                    break;
+            }
+
+            if (cmbTipeData.Items.Count > 0)
+                cmbTipeData.SelectedIndex = 0;
+
+            // Tampilkan data setelah perubahan
+            TampilkanData();
+        }
+
+        private void btnTampil_Click(object sender, EventArgs e)
+        {
+            TampilkanData();
+        }
+
+        private void TampilkanData()
+        {
+            if (cmbJenisLaporan.SelectedItem == null || cmbTipeData.SelectedItem == null)
+            {
+                MessageBox.Show("Pilih jenis laporan dan tipe data terlebih dahulu.");
+                return;
+            }
+
+            try
+            {
+                string jenisLaporan = cmbJenisLaporan.SelectedItem.ToString();
+                string tipeData = cmbTipeData.SelectedItem.ToString();
+
+                // Panggil method baru untuk mendapatkan data dengan filter
+                dtLaporan = dbLogic.GetLaporanWargaFiltered(jenisLaporan, tipeData);
+                dgvLaporan.DataSource = dtLaporan;
+
+                // Sembunyikan kolom "Judul" dari tampilan grid
+                if (dgvLaporan.Columns.Contains("Judul"))
+                    dgvLaporan.Columns["Judul"].Visible = false;
+
+                btnCetak.Enabled = dtLaporan.Rows.Count > 0;
+
+                if (dtLaporan.Rows.Count == 0)
+                    MessageBox.Show($"Data tidak ditemukan untuk {jenisLaporan} - {tipeData}.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+        private void btnCetak_Click(object sender, EventArgs e)
+        {
+            if (dtLaporan == null || dtLaporan.Rows.Count == 0)
+            {
+                MessageBox.Show("Tampilkan data terlebih dahulu sebelum mencetak.");
+                return;
+            }
+
+            string jenisLaporan = cmbJenisLaporan.SelectedItem.ToString();
+            string tipeData = cmbTipeData.SelectedItem.ToString();
+
+            // Kirim data yang sudah difilter ke form cetak
+            FormCetakLaporan frmCetak = new FormCetakLaporan(jenisLaporan, tipeData, dtLaporan);
+            frmCetak.Show();
         }
     }
 }
